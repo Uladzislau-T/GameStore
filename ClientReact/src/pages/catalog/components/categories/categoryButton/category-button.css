@@ -1,0 +1,31 @@
+.catalog-categories-accordion-btn{
+  width: 100%;
+  padding: 13px;
+  font-weight: 400;
+  color: #978e8e;
+  text-align: left;
+  background-color: transparent;  
+  border:none; 
+}
+
+.catalog-categories-accordion-btn:hover {
+  color: white;
+}
+
+.btn-active {
+  background-color: rgb(77, 47, 123, 0.5);
+}
+
+.fa-check{
+  display: none;
+  float: right;
+  margin-right: 5px;
+  margin-top: 9px;
+  color: white;
+}
+
+.check-active{
+  display: inline;
+  
+}
+

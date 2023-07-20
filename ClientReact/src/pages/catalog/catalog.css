@@ -1,0 +1,146 @@
+.catalog-container{
+  margin: 0px auto;
+  margin-top: 100px;
+  display: flex;
+  width: 75%;  
+  min-height: 500px;
+}
+
+.catalog-sortingAndItems{
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding-right: 10px;
+  width: 80%;
+}
+
+
+
+
+
+
+
+.sorting{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  color: #978e8e;
+  padding-top: 12px;
+}
+
+.arrow {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 2.5px;
+  margin-left: 7px;
+  margin-bottom: 2px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.dropbtn {
+  background-color: transparent;
+  color: white;
+  padding: 5px 5px;
+  font-size: 14px;
+  border: none;
+}
+
+.dropdown-content {
+  display:none;
+  position: absolute;
+  background-color: #352449;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px #2b1d3b;
+  z-index: 1;
+  margin-left: 30px;
+}
+
+.dropdown-content button {
+  text-align: left;
+  color: white;
+  padding: 5px 5px;
+  width: 100%;
+  text-decoration: none;
+  display: block;
+  background-color: #352449;
+  border: none;
+}
+
+.dropdown-content button:hover{
+  background-color: #553974;
+}
+
+.dropdown-content a:hover {
+  background-color: #462f63;
+  color: azure;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  color: azure;
+}
+
+.dropdown:hover .arrow {
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 2.5px;
+  margin-left: 7px;
+  margin-bottom: -1px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+
+
+
+
+
+.catalog-items{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;  
+  justify-content:left;
+  margin-bottom: 70px;
+}
+
+.catalog-items > div{
+  flex-basis: 25%;
+}
+
+.catalog-categories{
+  width: 20%;
+  min-height: 300px;
+  background-color: rgb(250, 235, 215, );
+  display: flex;
+  flex-direction: column;  
+}
+
+.catalog-categories > div{
+  margin-bottom: 5px;
+}
+
+.catalog-filter{
+  background-color: transparent;
+  color: #978e8e;
+  width: 100%;
+  height: 45px;
+  border: none;
+  padding: 18px 0px 0px 0px;
+  padding-left: 15px;
+  text-align: left;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
