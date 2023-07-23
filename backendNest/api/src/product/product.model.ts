@@ -1,11 +1,20 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
+import { Genre } from "./genre.model";
+import { Feature } from "./feature.model";
+import { Platform } from "./platform.model";
+import { ProductGenres } from "./product-genres.model";
+import { ProductFeatures } from "./product-features.model";
+import { ProductPlatforms } from "./product-platforms.model";
 
 interface ProductCreationAttrs {
   author: string,
   title: string,
   description: string,
   price: number
+  previewImage: string
+  mainImage:string
+  timeCreated: Date
 }
 
 
@@ -30,21 +39,21 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   @Column({type: DataType.DECIMAL})
   price: number
 
-  // @Column({type: DataType.STRING, unique:true, allowNull:true})
-  // previewImage: string
+  @Column({field: 'preview_image', type: DataType.STRING, allowNull:false})
+  previewImage: string
 
-  // @Column({type: DataType.STRING, unique:true, allowNull:true})
-  // mainImage: HTMLImageElement
+  @Column({field: 'main_image', type: DataType.STRING, allowNull:true})
+  mainImage: string
 
-  // @Column({type: DataType.DATE, unique:true, autoIncrement:true, primaryKey:true})
-  // timeCreated: Date
+  @Column({field: 'time_created', type: DataType.DATE})
+  timeCreated: Date
 
-  // @Column({type: DataType.STRING, unique:true, allowNull:false})
-  // genres: string[]
+  @BelongsToMany(() => Genre, () => ProductGenres)
+  genres: Genre[]
 
-  // @Column({type: DataType.INTEGER, unique:true, autoIncrement:true, primaryKey:true})
-  // features: string[]
+  @BelongsToMany(() => Feature, () => ProductFeatures)
+  features: Feature[]
 
-  // @Column({type: DataType.INTEGER, unique:true, autoIncrement:true, primaryKey:true})
-  // platforms: string[]
+  @BelongsToMany(() => Platform, () => ProductPlatforms)
+  platforms: Platform[]
 }
