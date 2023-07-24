@@ -6,6 +6,16 @@ async function bootstrap() {
   const PORT = process.env.PORT || 5004;
   const app = await NestFactory.create(AppModule);
 
+  const corsOptions = {
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true
+  };
+
+  app.enableCors(corsOptions)
+
   const config = new DocumentBuilder()
     .setTitle('GameStore')
     .setDescription('Rest documentation')

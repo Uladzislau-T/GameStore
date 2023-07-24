@@ -117,8 +117,8 @@ export const Catalog: FC<CatalogProps> = () => {
             </button>
             <div className="dropdown-content">
               <button onClick={() => handleSorting("All")}>All</button>
-              <button onClick={() => handleSorting("Date")}>New Releases</button>
-              <button onClick={() => handleSorting("Title")}>Alphabetical</button>
+              <button onClick={() => handleSorting("New Releases")}>New Releases</button>
+              <button onClick={() => handleSorting("Alphabetical")}>Alphabetical</button>
               <button onClick={() => handleSorting("Price: High to Low")}>
                 Price: High to Low
               </button>

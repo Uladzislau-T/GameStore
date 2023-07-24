@@ -64,7 +64,6 @@ server.get('/Games', (req, res) =>{
 
   const gamesLength = games.length
 
-
   let startIndex = (pageNumber - 1) * limit
 
   if(games.length - startIndex < 1)

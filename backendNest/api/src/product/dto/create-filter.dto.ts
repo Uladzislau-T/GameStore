@@ -1,12 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger"
 
 export class CreateFilterItemsDTO{
-  @ApiProperty({example:'string'})
-  readonly genreNames: string[] 
+  constructor(genres:string[],features:string[],platforms:string[]){
+    this.genres = genres
+    this.features = features
+    this.platforms = platforms
+  }
 
   @ApiProperty({example:'string'})
-  readonly featureNames: string[]
+  readonly genres: string[] 
 
   @ApiProperty({example:'string'})
-  readonly platformNames: string[]  
+  readonly features: string[]
+
+  @ApiProperty({example:'string'})
+  readonly platforms: string[]  
 }

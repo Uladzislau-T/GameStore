@@ -12,7 +12,7 @@ import {promises as fs} from 'fs';
 import { join } from 'path';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { FileService, FileType } from 'src/file/file.service';
-import { Request } from "express";
+import { Request, raw } from "express";
 import { Op } from 'sequelize';
 
 
@@ -28,42 +28,70 @@ export class ProductController {
     private fileService: FileService) {}
 
   // @ApiOperation({summary:'Product Creation'})
-  @ApiResponse({ status: 200, type: CreateProductDto})
+  @ApiResponse({ status: 200})
   @Get()
-  async getAll(@Req() req: Request, @Query('_sort') sort: string, @Query('_page') page: string,
-  @Query('_limit') limit: string, @Query('genres') genres?: string, @Query('features') features?: string,
+  async getAll(@Req() req: Request, @Query('_sort') sort: string = 'ALL', @Query('_page') page: number = 1,
+  @Query('_limit') limit: number = 12, @Query('genres') genres?: string, @Query('features') features?: string,
   @Query('platforms') platforms?: string) {
 
     const genresArr = genres != null ? genres.split(',') : []
     const featuresArr = features != null ? features.split(',') : []
     const platformsArr = platforms != null ? platforms.split(',') : []
 
+    // const dbGenres: {id:number}[] = await this.genreRepository.findAll({attributes:['id'], where:{name:{[Op.in]:genresArr}},raw:true})
+    // const dbFeatures = await this.genreRepository.findAll({where:{name:{[Op.in]:featuresArr}}})
+    // const dbPlatforms = await this.genreRepository.findAll({where:{name:{[Op.in]:platformsArr}}})
+
+
     const products = await this.productRepository.findAll({
       include:[
         {
-          model:Genre,
-          // attributes:['name'],
-          through: {where:{name:{[Op.in]:[genresArr]}}}
+          model:Genre,  
+          attributes:['name'],
         },
         {
           model:Feature,
           attributes:['name'],
-          through:{attributes:[]}
         },
         {
           model:Platform,
           attributes:['name'],
-          through:{attributes:[]}
         }
       ]
     })
+
+    let filteredProducts = products.filter((product) => {   
+      return (
+        genresArr.every(genre => product['genres'].some(g => g.name === genre)) &&
+        featuresArr.every(feature => product['features'].some(f => f.name === feature)) &&
+        platformsArr.every(platform => product['platforms'].some(p => p.name === platform))
+      )
+    })
+
+    switch (sort) {
+      case "New Releases":
+        filteredProducts.sort((a,b) => {return b.timeCreated.getTime() - a.timeCreated.getTime()})
+        break;
+      case "Alphabetical":
+        filteredProducts.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
+        break;
+      case "Price: High to Low":
+        filteredProducts.sort((a,b) => b.price - a.price)
+        break;
+      case "Price: Low to High":
+        filteredProducts.sort((a,b) => a.price - b.price)
+        break;
+      default:
+        break;
+    }    
 
     const protocol = req.protocol
     const host = req.get("Host");
     const fullUrl = `${protocol}://${host}/`;
 
-    const preResult = products.map((p) => {
+    const preResult = filteredProducts.map((p) => {
       return {
+        id: p.id,
         author: p.author,
         title: p.title,
         description: p.description,
@@ -78,12 +106,32 @@ export class ProductController {
 
     })
 
-    let result= []
-    for (let i = 0; i < preResult.length; i++) {
+    let games= []
+    let lastId = preResult.length + 1
+    for (let i = 0; i < 8; i++) {
       for (let i2 = 0; i2 < preResult.length; i2++) {
-        result.push(preResult[i2])        
+        let tempObj = Object.assign({}, preResult[i2])
+        tempObj.id = lastId
+        games.push(tempObj)   
+        lastId = lastId + 1     
       }      
     }
+
+    const gamesLength = games.length
+
+    let startIndex = (page - 1) * limit
+
+    if(games.length - startIndex < 1)
+    {
+      let endIndex = 0 + Number(limit)
+      games = games.slice(0, endIndex)
+    }
+    else{
+      let endIndex = startIndex + Number(limit)
+      games = games.slice(startIndex, endIndex)
+    }
+
+    const result = {games, gamesLength}
 
     return result
   }  
@@ -110,28 +158,38 @@ export class ProductController {
     return product
   }  
 
+  @ApiResponse({ status: 200, type: CreateFilterItemsDTO})
+  @Get('/categories')
+  async getAllCategories() { 
+    const dbGenres = (await this.genreRepository.findAll({attributes:['name']})).map(g => g.name)
+    const dbFeatures = (await this.featuretRepository.findAll({attributes:['name']})).map(f => f.name)
+    const dbPlatforms = (await this.platformRepository.findAll({attributes:['name']})).map(p => p.name)
+
+    return new CreateFilterItemsDTO(dbGenres, dbFeatures, dbPlatforms)
+  }
+
   @ApiResponse({ status: 200})
-  @Post('/filter')
+  @Post('/categories')
   async createProductFilterItems(@Body() filterDto: CreateFilterItemsDTO) {   
 
     const genres: Genre[] = []
     const features: Feature[] = []
     const platforms: Platform[] = []
 
-    if(filterDto.genreNames){
-      for await (const name of filterDto.genreNames){        
+    if(filterDto.genres){
+      for await (const name of filterDto.genres){        
         const genre = await this.genreRepository.findOrCreate({where: {name: name}})
         genres.push(genre[0])
       }
     }
-    if(filterDto.featureNames){
-      for await (const name of filterDto.featureNames){        
+    if(filterDto.features){
+      for await (const name of filterDto.features){        
         const feature = await this.featuretRepository.findOrCreate({where: {name: name}})
         features.push(feature[0])
       }
     }
-    if(filterDto.platformNames){
-      for await (const name of filterDto.platformNames){        
+    if(filterDto.platforms){
+      for await (const name of filterDto.platforms){        
         const platform = await this.platformRepository.findOrCreate({where: {name: name}})
         platforms.push(platform[0])
       }

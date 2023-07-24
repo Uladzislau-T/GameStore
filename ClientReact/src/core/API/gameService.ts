@@ -19,7 +19,7 @@ export const getAllProducts = createAsyncThunk(
   'game/getAllGames',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<IGame[]>('http://localhost:5002/Games?startpage=true&_page=1&_limit=5')
+      const response = await axios.get<IGame[]>('http://localhost:5004/products?startpage=true&_page=1&_limit=5')
       return response.data
     } 
     catch (error) {
@@ -30,13 +30,13 @@ export const getAllProducts = createAsyncThunk(
 
 export const gameAPI = createApi({
   reducerPath: "gameAPI",
-  baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:5002'}),
+  baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:5004'}),
   tagTypes: ['Game'],
   endpoints: (build) => ({
 
     getAllGames: build.query<GamesResponse, getGamesParams>({
       query: ({categories, sortingItem, page, limit}) => ({
-        url: '/Games?' + categories,
+        url: '/products?' + categories,
         params:{          
           _sort: sortingItem,
           _page: page,
@@ -49,7 +49,7 @@ export const gameAPI = createApi({
 
     getAllCategories: build.query<Categories, any>({
       query: () => ({
-        url: "/Categories"
+        url: "/products/categories"
       })
     }),
 
