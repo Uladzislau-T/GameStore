@@ -4,13 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import { setupStore } from './store/store';
 
-const store = setupStore();
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <Provider store={store}>
+  <Provider store={setupStore}>
     <BrowserRouter>
       <App />
     </BrowserRouter>

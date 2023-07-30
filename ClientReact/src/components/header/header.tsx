@@ -64,9 +64,9 @@ export const Header: FC<HeaderProps> = () => {
         </div>
       </div>
       <div className="navLoginCart">
-        <a href="/" className="dropLink-nav-login"><i className="fas fa-user ">
+        <Link to="/sign-in"  className="dropLink-nav-login"><i className="fas fa-user ">
           </i>
-        </a>
+        </Link>
         <a href="/" className="dropLink-nav-login"><i style={{color:"#b791e5", marginRight:"40px"}} className="fas fa-shopping-cart">
           <sup style={{color:"#f04242", fontSize:"12px",}}> ( 2 )<span> $15</span></sup>
           </i>

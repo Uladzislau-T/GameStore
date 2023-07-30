@@ -32,7 +32,18 @@ export class ProductController {
   @Get()
   async getAll(@Req() req: Request, @Query('_sort') sort: string = 'ALL', @Query('_page') page: number = 1,
   @Query('_limit') limit: number = 12, @Query('genres') genres?: string, @Query('features') features?: string,
-  @Query('platforms') platforms?: string) {
+  @Query('platforms') platforms?: string, @Query('startpage') startpage: boolean = false) {
+
+    const protocol = req.protocol
+    const host = req.get("Host");
+    const fullUrl = `${protocol}://${host}/`;
+
+    if(startpage)
+    {
+      let result = await this.productRepository.findAll({offset:3, limit:5})
+      result.forEach((p) => {p.previewImage = fullUrl + p.previewImage})
+      return result
+    }
 
     const genresArr = genres != null ? genres.split(',') : []
     const featuresArr = features != null ? features.split(',') : []
@@ -84,10 +95,6 @@ export class ProductController {
       default:
         break;
     }    
-
-    const protocol = req.protocol
-    const host = req.get("Host");
-    const fullUrl = `${protocol}://${host}/`;
 
     const preResult = filteredProducts.map((p) => {
       return {

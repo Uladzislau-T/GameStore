@@ -16,6 +16,7 @@ import { ProductFeatures } from './product/product-features.model';
 import { ProductPlatforms } from './product/product-platforms.model';
 import { FileModule } from './file/file.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AuthModule } from './auth/auth.module';
 import * as path from 'path';
 
 @Module({
@@ -42,6 +43,7 @@ import * as path from 'path';
     ProductModule,
     IdentityModule,
     CartModule,
-    FileModule,]  
+    FileModule,
+    AuthModule,]  
 })
 export class AppModule {}

@@ -6,6 +6,7 @@ import { AppDispatch } from "../../store/store"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { Categories, GamesResponse } from "../../pages/catalog/types";
 import { useParams } from "react-router-dom";
+import { baseQueryUrl } from "../baseQueryUrl";
 
 interface getGamesParams{
   categories: string,
@@ -19,7 +20,7 @@ export const getAllProducts = createAsyncThunk(
   'game/getAllGames',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<IGame[]>('http://localhost:5004/products?startpage=true&_page=1&_limit=5')
+      const response = await axios.get<IGame[]>(baseQueryUrl +'/products?startpage=true&_page=1&_limit=5')
       return response.data
     } 
     catch (error) {
@@ -30,7 +31,7 @@ export const getAllProducts = createAsyncThunk(
 
 export const gameAPI = createApi({
   reducerPath: "gameAPI",
-  baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:5004'}),
+  baseQuery: fetchBaseQuery({baseUrl: baseQueryUrl}),
   tagTypes: ['Game'],
   endpoints: (build) => ({
 

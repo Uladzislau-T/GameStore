@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { Catalog } from "../pages/catalog/catalog"
 import StartPage  from "../pages/startpage/startpage"
+import { SignIn } from "../pages/auth/sign-in/sign-in"
 
 
 interface RouteItem {
@@ -22,6 +23,14 @@ export const routes: Record<string, RouteItem> = {
     path: '/catalog/:page',
     Element: Catalog    
   },
+  signIn: {
+    path: '/sign-in',
+    Element: SignIn,
+  },
+  // signUp: {
+  //   path: '/sign-up',
+  //   Element: SignUp,
+  // },
   // profile: {
   //   path: '/@:profile',
   //   Element: ProfilePage,
