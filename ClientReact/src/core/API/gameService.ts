@@ -4,7 +4,7 @@ import applyCaseMiddleware from "axios-case-converter"
 import { IGame } from "../../types/game"
 import { AppDispatch } from "../../store/store"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { Categories, GamesResponse } from "../../pages/catalog/types";
+// import { Categories, GamesResponse } from "../../pages/catalog/types";
 import { useParams } from "react-router-dom";
 import { baseQueryUrl } from "../baseQueryUrl";
 
@@ -29,45 +29,45 @@ export const getAllProducts = createAsyncThunk(
   }
 )
 
-export const gameAPI = createApi({
-  reducerPath: "gameAPI",
-  baseQuery: fetchBaseQuery({baseUrl: baseQueryUrl}),
-  tagTypes: ['Game'],
-  endpoints: (build) => ({
+// export const gameAPI = createApi({
+//   reducerPath: "gameAPI",
+//   baseQuery: fetchBaseQuery({baseUrl: baseQueryUrl}),
+//   tagTypes: ['Game'],
+//   endpoints: (build) => ({
 
-    getAllGames: build.query<GamesResponse, getGamesParams>({
-      query: ({categories, sortingItem, page, limit}) => ({
-        url: '/products?' + categories,
-        params:{          
-          _sort: sortingItem,
-          _page: page,
-          _limit: limit
-        }
-      }),            
-      providesTags: result => ['Game']    //это нужно чтобы не рефетчить после добавления нового itema на бек
-    }),
-
-
-    getAllCategories: build.query<Categories, any>({
-      query: () => ({
-        url: "/products/categories"
-      })
-    }),
+//     getAllGames: build.query<GamesResponse, getGamesParams>({
+//       query: ({categories, sortingItem, page, limit}) => ({
+//         url: '/products?' + categories,
+//         params:{          
+//           _sort: sortingItem,
+//           _page: page,
+//           _limit: limit
+//         }
+//       }),            
+//       providesTags: result => ['Game']    //это нужно чтобы не рефетчить после добавления нового itema на бек
+//     }),
 
 
-    // ======================================================
-    // mutations
-    // ======================================================
+//     getAllCategories: build.query<Categories, any>({
+//       query: () => ({
+//         url: "/products/categories"
+//       })
+//     }),
 
-    createGame: build.mutation<IGame, IGame>({
-      query: (game) => ({
-        url: '/Games',
-        method: "POST",
-        body:game
-      })
-    })
-  })
-})
+
+//     // ======================================================
+//     // mutations
+//     // ======================================================
+
+//     createGame: build.mutation<IGame, IGame>({
+//       query: (game) => ({
+//         url: '/Games',
+//         method: "POST",
+//         body:game
+//       })
+//     })
+//   })
+// })
 
 
 

@@ -12,7 +12,7 @@ import {promises as fs} from 'fs';
 import { join } from 'path';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { FileService, FileType } from 'src/file/file.service';
-import { Request, raw } from "express";
+import { Request } from "express";
 import { Op } from 'sequelize';
 
 
@@ -24,8 +24,8 @@ export class ProductController {
     @InjectModel(Genre) private genreRepository: typeof Genre,
     @InjectModel(Feature) private featuretRepository: typeof Feature,
     @InjectModel(Platform) private platformRepository: typeof Platform,
-    private productService: ProductService,
-    private fileService: FileService) {}
+    private fileService: FileService
+    ) {}
 
   // @ApiOperation({summary:'Product Creation'})
   @ApiResponse({ status: 200})
@@ -34,8 +34,8 @@ export class ProductController {
   @Query('_limit') limit: number = 12, @Query('genres') genres?: string, @Query('features') features?: string,
   @Query('platforms') platforms?: string, @Query('startpage') startpage: boolean = false) {
 
-    const protocol = req.protocol
-    const host = req.get("Host");
+    const protocol = req?.protocol
+    const host = req?.get("Host");
     const fullUrl = `${protocol}://${host}/`;
 
     if(startpage)
@@ -106,9 +106,9 @@ export class ProductController {
         previewImage: fullUrl + p.previewImage,
         mainImage:p.mainImage,
         timeCreated: p.timeCreated,
-        genres: p.genres.map((g) => {return g.name}),
-        features: p.features.map((f) => {return f.name}),
-        platforms: p.platforms.map((p) => {return p.name})
+        genres: p.genres?.map((g) => {return g.name}),
+        features: p.features?.map((f) => {return f.name}),
+        platforms: p.platforms?.map((p) => {return p.name})
       }
 
     })

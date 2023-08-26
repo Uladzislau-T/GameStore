@@ -1,0 +1,51 @@
+@import "reset";
+@import "variables/global";
+@import "themes/normal";
+@import "themes/light";
+
+
+.app {
+  font-size: var(--font-m); 
+
+  background: var(--bg-color);
+  color: var(--primary-color);
+
+  min-height: 100vh;
+}
+
+
+
+
+// *{
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;  
+//   }
+//   html {
+//     font-size: 14px; 
+//   }
+//   @media (min-width: 1040px) {
+//     html {
+//       font-size: 16px;
+//     }
+//   }
+//   body{  
+//     font-weight: 400;
+//     background-color: #1d1427;
+//     letter-spacing: 0.5px; 
+//     font-size: 14px;
+//     color: white;
+    
+//   }
+//   body a {
+//     color: white;
+//     text-decoration: none;
+//   }
+
+//   .app{
+//     max-width:1600px;
+//     margin:0px auto;
+//     min-height: 100vh;
+//     display: flex;
+//     flex-direction: column;
+//   }

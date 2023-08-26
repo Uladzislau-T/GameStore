@@ -1,13 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import gameReducer from './reducers/gameSlice'
-import { gameAPI } from "../core/API/gameService";
+// import { gameAPI } from "../core/API/gameService";
 import { authApi } from "../core/API/authService";
 import { authSlice } from "./reducers/authSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const combineReducer = combineReducers({
   gameReducer,
-  [gameAPI.reducerPath]: gameAPI.reducer,
+  // [gameAPI.reducerPath]: gameAPI.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [authSlice.name]: authSlice.reducer
 });
@@ -15,7 +15,8 @@ const combineReducer = combineReducers({
 export const setupStore = configureStore({
   reducer: combineReducer,
   middleware:(getDefaultMiddleware) => 
-    getDefaultMiddleware().concat(gameAPI.middleware)
+    getDefaultMiddleware()
+    // .concat(gameAPI.middleware)
         
 })
 

@@ -1,7 +1,7 @@
-import "./startPage.css"
-import { GameCard } from "../../components/gameCard/gameCard";
+import cls from './startpage.module.scss'
+// import { GameCard } from "../../components/gameCard/gameCard";
 import { useEffect } from "react";
-import Hover from "../../components/hover/hover";
+// import Hover from "../../components/hover/hover";
 import { getAllProducts } from "../../core/API/gameService";
 import { useAppDispatch, useTypedSelector } from "../../store/store";
 
@@ -16,15 +16,17 @@ function StartPage() {
   }, [])
 
   return (
-    <div className="startPage-container">
-      <section id="carouselCaptions" className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-indicators">
+    <div className={cls["startPage-container"]}>
+      <div>MAIN PAGE</div>
+      
+      {/* <section id="carouselCaptions" className="carousel slide" data-bs-ride="carousel">
+        <div className={cls["carousel-indicators"]}>
           <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div className="carousel-inner">
-          <div className="carousel-item active" data-bs-interval="7000">
+          <div className={`${cls["carousel-item]"]} active`} data-bs-interval="7000">
             <img src="images/thumb-1920-1151027.jpg" className="d-block w-100" alt="..."/>
             <div className="carousel-caption  text-end mb-md-5 pb-md-5">
               <h1 >WORLD OF 2042</h1>
@@ -32,16 +34,16 @@ function StartPage() {
               <a href="/" className="btn btn-danger btn-lg">Pre-Order</a>
             </div>
           </div>
-          <div className="carousel-item" data-bs-interval="7000">
+          <div className={cls["carousel-item"]} data-bs-interval="7000">
             <img src="images/HL-Alyx-Reveal-Featured.jpg" className="d-block w-100" alt="..."/>
-            <div className="carousel-caption d-none d-md-block">
+            <div className={`${cls['carousel-caption']} d-none d-md-block`}>
               <h5>Purchase Now</h5>
               <p>Extremely creative slogan</p>
             </div>
           </div>
-          <div className="carousel-item" data-bs-interval="7000">
+          <div className={cls["carousel-item"]} data-bs-interval="7000">
             <img src="images/A-Total-War-Saga-Troy-Recensione-apertur.jpg" className="d-block w-100" alt="..."/>
-            <div className="carousel-caption text-start pb-lg-5 mb-lg-5">
+            <div className={`${cls['carousel-caption']} text-start pb-lg-5 mb-lg-5`}>
             <a href="/" className="btn btn-warning btn-lg mb-xl-5 btn-troy">Purchase Now</a>
             </div>
           </div>
@@ -54,10 +56,10 @@ function StartPage() {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
-      </section>
+      </section> */}
 
 
-      <section className="py-5 mt-5">
+      {/* <section className="py-5 mt-5">
         <div className="container-fluid">
             <div className="row home-icons" style={{alignSelf:"center"}}>
                 <div className="mb-4 text-center home-icon">
@@ -90,12 +92,12 @@ function StartPage() {
                 </div>
             </div>
         </div>
-      </section>
+      </section> */}
 
 
 
       
-      <Hover>
+      {/* <Hover>
         {(hover) => (
           <section className="section-gameList">
             <h1 className="startpage-gameList-sectionName">
@@ -110,9 +112,9 @@ function StartPage() {
           </section>
         )
         }
-      </Hover>
+      </Hover> */}
 
-      <section className="home-heading p-5">
+      {/* <section className="home-heading p-5">
           <div className="dark-overlay">
               <div className="">
                   <div className="">
@@ -126,9 +128,9 @@ function StartPage() {
                   </div>
               </div>
           </div>
-      </section>
+      </section> */}
 
-      <section className="banner">
+      {/* <section className="banner">
         <h5 className="pb-5 pt-5" style={{marginLeft: "25%"}}>MegaStore Games Catalog</h5>
         <div className="container brows-cat">
             <a href="/catalog" className="brows-cat-link"><img className="brows-cat-pic" src="/images/brows-cat.png" alt="First Slide"/></a>
@@ -138,7 +140,7 @@ function StartPage() {
                 <a href="/catalog" className="btn btn-light btn-lg mt-4">Learn More</a>
             </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
