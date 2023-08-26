@@ -2,8 +2,8 @@ import cls from './startpage.module.scss'
 // import { GameCard } from "../../components/gameCard/gameCard";
 import { useEffect } from "react";
 // import Hover from "../../components/hover/hover";
-import { getAllProducts } from "../../core/API/gameService";
-import { useAppDispatch, useTypedSelector } from "../../store/store";
+import { getAllProducts } from '../../../core/API/gameService';
+import { useAppDispatch, useTypedSelector } from '../../../store/store';
 
  
 function StartPage() {

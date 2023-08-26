@@ -1,0 +1,1 @@
+export { CatalogAsync as Catalog } from "./ui/catalog.async";

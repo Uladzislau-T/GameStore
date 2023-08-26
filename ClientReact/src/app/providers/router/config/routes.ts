@@ -1,6 +1,6 @@
 import { FC } from "react"
-import { StartPageAsync } from "../pages/startpage/startpage.async"
-import { CatalogAsync } from "../pages/catalog/catalog.async"
+import { StartPage } from "../../../../pages/startpage"
+import { Catalog } from "../../../../pages/catalog"
 // import { SignIn } from "../pages/auth/sign-in/sign-in"
 
 
@@ -13,11 +13,11 @@ interface RouteItem {
 export const routes: Record<string, RouteItem> = {
   startPage: {
     path: '/',
-    Element: StartPageAsync,
+    Element: StartPage,
   },
   catalog: {
     path: '/catalog',
-    Element: CatalogAsync    
+    Element: Catalog    
   },
   // catalogPaged: {
   //   path: '/catalog/:page',

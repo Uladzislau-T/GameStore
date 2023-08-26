@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { App } from './App';
+import { App } from './app/App';
 import { setupStore } from './store/store';
-import ThemeProvider from './theme/ThemeProvider';
+import ThemeProvider from './app/providers/ThemeProvider/ui/ThemeProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
