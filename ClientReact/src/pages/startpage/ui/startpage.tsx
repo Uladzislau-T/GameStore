@@ -4,6 +4,7 @@ import { useEffect } from "react";
 // import Hover from "../../components/hover/hover";
 import { getAllProducts } from '../../../core/API/gameService';
 import { useAppDispatch, useTypedSelector } from '../../../store/store';
+import { classNames } from '../../../shared/lib/classNames/classNames';
 
  
 function StartPage() {
@@ -16,7 +17,7 @@ function StartPage() {
   }, [])
 
   return (
-    <div className={cls["startPage-container"]}>
+    <div className={classNames(cls.startPage_container, {}, [])}>
       <div>MAIN PAGE</div>
       
       {/* <section id="carouselCaptions" className="carousel slide" data-bs-ride="carousel">

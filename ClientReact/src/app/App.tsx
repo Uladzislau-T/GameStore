@@ -28,8 +28,7 @@ export const App: FC<AppProps> = () => {
 
   return (
     <div className={classNames("app",{}, [theme])}>
-      <Navbar/>
-      <button onClick={toggleTheme}>TOGGLE</button>
+      <Navbar className='' />      
       <AppRouter/>
       <Footer/>
     </div>

@@ -3,6 +3,19 @@
 @import "themes/normal";
 @import "themes/light";
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;  
+}
+body a {
+      color: var(--primary-color);
+      text-decoration: none;
+}
+
+body button{
+  outline: none;
+}
 
 .app {
   font-size: var(--font-m); 
@@ -10,8 +23,12 @@
   background: var(--bg-color);
   color: var(--primary-color);
 
-  min-height: 100vh;
+  min-height: 100vh;  
+  margin:0px auto;  
+  margin-top: var(--page-indentation);
 }
+
+
 
 
 
@@ -36,10 +53,6 @@
 //     font-size: 14px;
 //     color: white;
     
-//   }
-//   body a {
-//     color: white;
-//     text-decoration: none;
 //   }
 
 //   .app{
