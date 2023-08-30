@@ -2,9 +2,9 @@ import cls from './startpage.module.scss'
 // import { GameCard } from "../../components/gameCard/gameCard";
 import { useEffect } from "react";
 // import Hover from "../../components/hover/hover";
-import { getAllProducts } from '../../../core/API/gameService';
-import { useAppDispatch, useTypedSelector } from '../../../store/store';
-import { classNames } from '../../../shared/lib/classNames/classNames';
+import { getAllProducts } from '../../../app/core/API/gameService';
+import { useAppDispatch, useTypedSelector } from '../../../app/store/store';
+import { classNames } from '../../../utils/classNames/classNames';
 
  
 function StartPage() {

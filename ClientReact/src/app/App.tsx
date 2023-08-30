@@ -5,10 +5,10 @@ import { routes } from './providers/router/config/routes';
 import './styles/app.scss';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from './providers/ThemeProvider/lib/useTheme';
-import { classNames } from '../shared/lib/classNames/classNames';
+import { classNames } from '../utils/classNames/classNames';
 import { AppRouter } from './providers/router';
-import { Footer } from '../widgets/footer';
-import { Navbar } from '../widgets/navbar';
+import { Footer } from '../components/footer';
+import { Navbar } from '../components/navbar';
 
 interface AppProps {}
 

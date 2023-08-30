@@ -1,6 +1,6 @@
 import { FC, lazy } from "react";
 import cls from "./catalog.module.scss"
-import { classNames } from "../../../shared/lib/classNames/classNames";
+import { classNames } from "../../../utils/classNames/classNames";
 
 interface CatalogProps {
   

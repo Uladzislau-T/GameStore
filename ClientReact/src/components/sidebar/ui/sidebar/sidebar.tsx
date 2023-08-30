@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import { classNames } from "../../../../shared/lib/classNames/classNames";
+import { classNames } from "../../../../utils/classNames/classNames";
 import cls from "./sidebar.module.scss"
-import { ThemeSwitcher } from "../../../../shared/ui/ThemeSwitcher";
+import { ThemeSwitcher } from "../../../../widgets/themeSwitcher";
 
 interface SidebarProps {
   className?:string

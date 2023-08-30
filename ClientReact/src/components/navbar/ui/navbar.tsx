@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { classNames } from "../../../shared/lib/classNames/classNames";
+import { classNames } from "../../../utils/classNames/classNames";
 import cls from "./navbar.module.scss"
 import { useTheme } from "../../../app/providers/ThemeProvider/lib/useTheme";
 import { useState } from "react";
 import { Sidebar } from "../../sidebar";
-import { ThemeSwitcher } from "../../../shared/ui/ThemeSwitcher";
+import { ThemeSwitcher } from "../../../widgets/themeSwitcher";
 
 
 interface NavbarProps {

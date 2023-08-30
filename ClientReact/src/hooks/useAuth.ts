@@ -1,8 +1,8 @@
-import { useLazySignInQuery, useLazySignUpQuery } from "../core/API/authService";
-import SignInParams from "../core/dto/signInParams";
-import SignUpParams from "../core/dto/signUpParams";
-import { selectUser, setUser } from "../store/reducers/authSlice";
-import { useAppDispatch, useTypedSelector } from "../store/store";
+import { useLazySignInQuery, useLazySignUpQuery } from "../app/core/API/authService";
+import SignInParams from "../app/core/dto/signInParams";
+import SignUpParams from "../app/core/dto/signUpParams";
+import { selectUser, setUser } from "../app/store/reducers/authSlice";
+import { useAppDispatch, useTypedSelector } from "../app/store/store";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
