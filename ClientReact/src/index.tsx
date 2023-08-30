@@ -5,6 +5,8 @@ import { App } from './app/App';
 import { setupStore } from './app/store/store';
 import ThemeProvider from './app/providers/ThemeProvider/ui/ThemeProvider';
 
+import './app/providers/i18n/i18n';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

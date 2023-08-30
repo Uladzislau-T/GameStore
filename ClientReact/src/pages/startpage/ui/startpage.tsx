@@ -1,15 +1,17 @@
 import cls from './startpage.module.scss'
 // import { GameCard } from "../../components/gameCard/gameCard";
-import { useEffect } from "react";
+import { useEffect} from "react";
 // import Hover from "../../components/hover/hover";
 import { getAllProducts } from '../../../app/core/API/gameService';
 import { useAppDispatch, useTypedSelector } from '../../../app/store/store';
 import { classNames } from '../../../utils/classNames/classNames';
+import { useTranslation } from 'react-i18next';
 
  
 function StartPage() {
   const dispatch = useAppDispatch();
   const {games, isLoading, error} = useTypedSelector(state => state.gameReducer)
+  const {t} = useTranslation("startpage")
 
   useEffect(() => {
     // if(!games)
@@ -18,7 +20,7 @@ function StartPage() {
 
   return (
     <div className={classNames(cls.startPage_container, {}, [])}>
-      <div>MAIN PAGE</div>
+      <div>{t("Main Page")}</div>
       
       {/* <section id="carouselCaptions" className="carousel slide" data-bs-ride="carousel">
         <div className={cls["carousel-indicators"]}>

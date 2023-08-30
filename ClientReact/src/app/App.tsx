@@ -28,9 +28,11 @@ export const App: FC<AppProps> = () => {
 
   return (
     <div className={classNames("app",{}, [theme])}>
-      <Navbar className='' />      
-      <AppRouter/>
-      <Footer/>
+      <Suspense fallback="">
+        <Navbar className='' />      
+        <AppRouter/>
+        <Footer/>
+      </Suspense>
     </div>
   );
 }

@@ -5,6 +5,8 @@ import { useTheme } from "../../../app/providers/ThemeProvider/lib/useTheme";
 import { useState } from "react";
 import { Sidebar } from "../../sidebar";
 import { ThemeSwitcher } from "../../../widgets/themeSwitcher";
+import { useTranslation } from "react-i18next";
+import { LangSwitcher } from "../../../widgets/langSwitcher";
 
 
 interface NavbarProps {
@@ -12,6 +14,7 @@ interface NavbarProps {
 }
  
 const Navbar = ({className}: NavbarProps) => {
+  const {t} = useTranslation("navbar")
   const {theme, toggleTheme} = useTheme()
   const [collapsed, setCollapsed] = useState<boolean>(true)
 
@@ -36,7 +39,7 @@ const Navbar = ({className}: NavbarProps) => {
         </Link>
         <div className={cls.navbarLinkList} >
           <div className={cls.navbarLink}>
-            <Link to="/catalog" >Store<i className={cls.arrow_nav}></i></Link>
+            <Link to="/catalog" >{t("Store")}<i className={cls.arrow_nav}></i></Link>
             {/* <ul className="navSlide">
               <li><Link to="" className="">Total War</Link></li>
               <li><Link to="" className="">Gothic</Link></li>
@@ -46,7 +49,7 @@ const Navbar = ({className}: NavbarProps) => {
             </ul> */}
           </div>
           <div className={cls.navbarLink}>
-            <Link to="/news">News<i className={cls.arrow_nav}></i></Link>
+            <Link to="/news">{t("News")}<i className={cls.arrow_nav}></i></Link>
             {/* <ul className="navSlide">
               <li><Link to="" className="">Latest</Link></li>
               <div></div>
@@ -56,19 +59,20 @@ const Navbar = ({className}: NavbarProps) => {
             </ul> */}
           </div>
           <div className={cls.navbarLink}>
-            <Link to="">Community
+            <Link to="">{t("Community")}
             </Link>
           </div>
           <div className={cls.navbarLink}>
-            <Link to="">About
-            </Link>
-          </div>
-          <div className={cls.navbarLink}>
-            <Link to="">Contact
-            </Link>
-          </div>
+            <Link to="">{t("About")}</Link>
+            {/* <ul className="navSlide">
+              <li><Link to="" className="">Contacts</Link></li>
+              <div></div>
+              <li><Link to="" className="">American Market</Link></li>              
+            </ul> */}
+          </div>          
         </div>
         <ThemeSwitcher className={cls.navbar_theme_visible}/>
+        <LangSwitcher className={cls.lang}/>
         <div className={cls.navBtn}>      
           <label htmlFor={cls.menu_toggle}>        
             <span></span>
