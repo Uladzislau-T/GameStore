@@ -1,0 +1,2 @@
+obj\Debug\net7.0\Protos/Carts.cs \
+obj\Debug\net7.0\Protos/CartsGrpc.cs: Protos/carts.proto

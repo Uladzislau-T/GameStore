@@ -1,0 +1,73 @@
+﻿version: '3.8' # зависит от версии docker engine
+
+networks:
+  cart-db-bridge:  # как бд и бек соединяются
+    driver: bridge
+  catalog-db-bridge:  # как бд и бек соединяются
+    driver: bridge
+
+services:
+  cart:
+    image: ${REGISTRY:-gamestore}/cart:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: ./cart
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:   # не запустит приложение до старта базы данных
+      - cartsqldata
+    ports:
+      - "8003:80" # внешний и внутренний порт
+    networks:
+      - cart-db-bridge
+
+  catalog:
+    container_name: catalog
+    build:
+      context: ./catalog
+      dockerfile: Dockerfile
+    env_file:
+      - catalog/.production.env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 8001:81
+    depends_on:
+      - catalogsqldata
+    command: npm run start:prod    
+    networks:
+      - catalog-db-bridge
+
+  cartsqldata:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: cart  # название базы данных
+    ports:
+      - "5432:5432" # первый ip опционален, так как тип соединения bridge и соединятся будет по имени сервиса
+    networks:
+      - cart-db-bridge
+    volumes:
+      - gamestore-cartsqldata:/var/lib/postgresql/data
+
+  catalogsqldata:
+    # container_name: postgres #change postgres_host to postgres in development.env when will be ready to use
+    image: postgres:latest
+    env_file:
+      - catalog/.production.env
+    # environment:
+    #   PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - gamestore-catalogsqldata:/var/lib/postgresql/data
+    networks:
+      - catalog-db-bridge
+
+volumes:
+  gamestore-cartsqldata:
+  gamestore-catalogsqldata:
+
+
