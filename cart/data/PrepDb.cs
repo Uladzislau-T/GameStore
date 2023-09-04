@@ -14,8 +14,8 @@ namespace cart.Data
 
         private static void SeedData(Context context, bool isProd)
         {
-            if (isProd)
-            {
+            // if (isProd)
+            // {
                 Console.WriteLine("--> Attempting to apply migrations...");
                 try
                 {
@@ -25,7 +25,7 @@ namespace cart.Data
                 {
                     Console.WriteLine($"--> Could not run migrations: {ex.Message}");
                 }
-            }
+            // }
 
             if (!context.Cart.Any())
             {

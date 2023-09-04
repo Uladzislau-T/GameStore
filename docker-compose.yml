@@ -3,8 +3,8 @@
 networks:
   cart-db-bridge:  # как бд и бек соединяются
     driver: bridge
-  catalog-db-bridge:  # как бд и бек соединяются
-    driver: bridge
+  # catalog-db-bridge:  # как бд и бек соединяются
+  #   driver: bridge
 
 services:
   cart:
@@ -21,24 +21,6 @@ services:
     networks:
       - cart-db-bridge
 
-  catalog:
-    container_name: catalog
-    build:
-      context: ./catalog
-      dockerfile: Dockerfile
-    env_file:
-      - catalog/.production.env
-    volumes:
-      - .:/app
-      - /app/node_modules
-    ports:
-      - 8001:81
-    depends_on:
-      - catalogsqldata
-    command: npm run start:prod    
-    networks:
-      - catalog-db-bridge
-
   cartsqldata:
     image: postgres:latest
     environment:
@@ -52,22 +34,48 @@ services:
     volumes:
       - gamestore-cartsqldata:/var/lib/postgresql/data
 
-  catalogsqldata:
-    # container_name: postgres #change postgres_host to postgres in development.env when will be ready to use
-    image: postgres:latest
-    env_file:
-      - catalog/.production.env
-    # environment:
-    #   PG_DATA: /var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    volumes:
-      - gamestore-catalogsqldata:/var/lib/postgresql/data
-    networks:
-      - catalog-db-bridge
-
 volumes:
   gamestore-cartsqldata:
-  gamestore-catalogsqldata:
+  # gamestore-catalogsqldata:
+
+
+
+  # catalog:
+  #   container_name: catalog
+  #   image: ${REGISTRY:-gamestore}/catalog:${PLATFORM:-linux}-${TAG:-latest}
+  #   build:
+  #     context: ./catalog
+  #     target: production
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - catalog/.production.env
+  #   # volumes:
+  #   #   - .:/app
+  #   #   - /app/node_modules
+  #   ports:
+  #     - 3000:3000
+  #     - 8001:81
+  #   depends_on:
+  #     - catalogsqldata
+  #   # command: npm run start:prod    
+  #   networks:
+  #     - catalog-db-bridge
+  #   restart: unless-stopped
+
+  # catalogsqldata:
+  #   # container_name: postgres #change postgres_host to postgres in development.env when will be ready to use
+  #   image: postgres:latest
+  #   env_file:
+  #     - catalog/.production.env
+  #   # environment:
+  #   #   POSTGRES_USER: postgres
+  #   #   POSTGRES_PASSWORD: 1234
+  #   #   POSTGRES_DB: catalog  # название базы данных
+  #   ports:
+  #     - "5433:5432"
+  #   volumes:
+  #     - gamestore-catalogsqldata:/var/lib/postgresql/data
+  #   networks:
+  #     - catalog-db-bridge
 
 

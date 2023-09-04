@@ -12,19 +12,19 @@ if (!isDev)
 {
     Console.WriteLine("--> Using Docker Prod Db");
     builder.Services.AddDbContext<Context>(opt =>
-        opt.UseNpgsql(builder.Configuration.GetConnectionString("PlatformsConn")));
+        opt.UseNpgsql(builder.Configuration.GetConnectionString("cartConn")));
 }
 else
 {
     Console.WriteLine("--> Using DevLocalDb");
     builder.Services.AddDbContext<Context>(opt =>
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("PlatformsConn")));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("cartConn")));
 }
 
 builder.Services.AddControllers().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        });
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 builder.Services.AddGrpc();
 
@@ -41,6 +41,8 @@ var app = builder.Build();
     app.UseSwaggerUI();
 // }
 
+app.UseRouting();
+
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -48,7 +50,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseEndpoints(e => {
-    e.MapGrpcService<GrpcCartService>();
+    // e.MapGrpcService<GrpcCartService>();
+    // e.MapGet("/protos/cart.proto", async context =>
+    // {
+    //     await context.Response.WriteAsync(File.ReadAllText("Protos/cart.proto"));
+    // });
 });
 
 PrepDb.PrepPopulation(app, app.Environment.IsProduction()); 
