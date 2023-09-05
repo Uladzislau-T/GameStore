@@ -1,0 +1,47 @@
+.notFound{
+  background: #cccccc;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  text-align: center;
+}
+
+.notFound_wrapper{
+  display: inline-block;
+  position: relative;
+}
+
+.notFound_img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+}
+
+.bear{
+  display: inline-block;
+  right: auto;
+  position: absolute;
+  left: 81.15%;
+  top: 38.27%;
+}
+
+.bear_text{
+  text-align: center;
+  height: fit-content;
+  width: 120px;
+  display: inline-block;
+  position: absolute;
+  left: 60px;
+  top:15px;
+  font-size: 10px;
+  line-height: 1,5;
+}
+
+.bear_text_link{
+  text-decoration:underline;
+}
+
+.bear_img{
+  max-width: none;
+}
+

@@ -2,9 +2,17 @@ import HTMLWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
 import { BuildOptions } from "./types/config";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 
 
 export function buildPlugins({paths, isDev}: BuildOptions): webpack.WebpackPluginInstance[]{
+  let plugins:any[] = [];
+
+  if(isDev){
+    plugins.push(new ReactRefreshWebpackPlugin())
+    plugins.push(new webpack.HotModuleReplacementPlugin())
+  }
+
   return [
     new HTMLWebpackPlugin({template: paths.html}),     // для работы с штмл
     new webpack.ProgressPlugin(),                     //The ProgressPlugin provides a way to customize how progress is reported during a compilation.
@@ -14,6 +22,7 @@ export function buildPlugins({paths, isDev}: BuildOptions): webpack.WebpackPlugi
     }),
     new webpack.DefinePlugin({
       __IS_DEV__: JSON.stringify(isDev),
-    })
+    }),
+    ...plugins
   ]
 }
