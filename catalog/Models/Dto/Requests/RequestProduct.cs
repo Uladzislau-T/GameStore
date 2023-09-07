@@ -1,4 +1,4 @@
-namespace catalog.Models.Requests
+namespace catalog.Models.Dto.Requests
 {
   public class RequestProduct
   {

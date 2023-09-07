@@ -15,7 +15,7 @@ namespace catalog.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Feature> Feature { get; set; }
-        public DbSet<Genre> Platform { get; set; }
+        public DbSet<Platform> Platform { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

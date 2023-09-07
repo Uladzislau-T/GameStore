@@ -19,7 +19,6 @@ namespace cart.Controllers
         public async Task<ActionResult<Cart>> Get()
         {
             var cart = await _context.Cart.Include(c => c.Items).SingleOrDefaultAsync(c => c.Id == 1);
-
             return Ok(cart);
         }
     }

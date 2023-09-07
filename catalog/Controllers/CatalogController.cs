@@ -1,12 +1,13 @@
+using System.Net;
 using catalog.Models.Dto;
 using catalog.Models.Interfaces;
-using catalog.Models.Requests;
+using catalog.Models.Dto.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace catalog.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ProductController : ControllerBase
 {
 
@@ -28,5 +29,46 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<> CreateCart()
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    public async Task<ActionResult<ProductDto>> CreateProduct([FromBody] ProductDto dto)
+    {
+        if(!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        var result = await _productRepository.CreateProduct(dto);
+
+        return result;
+    }
+
+    [HttpPut]
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    public async Task<ActionResult<ProductDto>> UpdateProduct([FromBody] ProductDto dto)
+    {     
+        var result = await _productRepository.UpdateProduct(dto);
+
+        if(result == null)
+        {
+            return NotFound();
+        }   
+
+        return result;
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult> CreateProduct([FromQuery] int id)
+    {      
+        var result = await _productRepository.DeleteProduct(id);
+
+        if(result == false)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
+    // [HttpPost]
+    // public async Task<> CreateCart()
 }

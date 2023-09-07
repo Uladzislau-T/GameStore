@@ -3,7 +3,7 @@ using AutoMapper;
 using catalog.Models;
 using catalog.Models.Dto;
 using catalog.Models.Interfaces;
-using catalog.Models.Requests;
+using catalog.Models.Dto.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace catalog.Data
@@ -18,7 +18,7 @@ namespace catalog.Data
         _mapper = mapper;
       }      
 
-      public async Task<ResponseProductDto> GetProducts(RequestProduct request)
+        public async Task<ResponseProductDto> GetProducts(RequestProduct request)
       {
         var genres = request.Genres != string.Empty ? request.Genres?.Split(",") : Array.Empty<string>();
         var features = request.Features != string.Empty ? request.Features?.Split(",") : Array.Empty<string>();
@@ -83,5 +83,83 @@ namespace catalog.Data
 
         return new ResponseProductDto(productsDto, productsCount);             
       }
+
+      public async Task<ProductDto> CreateProduct(ProductDto dto)
+      {
+        var product = await MapToProductAsync(dto);
+        
+        _context.Product.Add(product);
+
+        await _context.SaveChangesAsync();
+
+        return dto;
+      }
+
+      public async Task<ProductDto> UpdateProduct(ProductDto dto)
+      {
+        var product = await _context.Product.Where(p => p.Id == dto.Id).FirstOrDefaultAsync();
+
+        if(product == null)
+        {
+          return null;
+        }
+
+        var genres = await _context.Genre.Where(g => dto.Genres.Contains(g.Name)).ToArrayAsync();
+        var features = await _context.Feature.Where(g => dto.Features.Contains(g.Name)).ToArrayAsync();
+        var platforms = await _context.Platform.Where(g => dto.Platforms.Contains(g.Name)).ToArrayAsync();
+        
+        product.Author = dto.Author;
+        product.Title = dto.Title;
+        product.Description = dto.Description;
+        product.Price = dto.Price;
+        product.TimeCreated = product.TimeCreated;
+        product.Genres = genres;
+        product.Features = features;
+        product.Platforms =platforms;
+
+        _context.Product.Update(product);
+
+        await _context.SaveChangesAsync();
+        
+        return dto;
+      }
+
+        public async Task<bool> DeleteProduct(int id)
+        {
+          var product = await _context.Product.FirstOrDefaultAsync(p => p.Id == id);
+
+          if(product == null)
+          {
+            return false;
+          }
+
+          _context.Product.Remove(product);
+
+          await _context.SaveChangesAsync();
+
+          return true;
+        }
+
+        private async Task<Product> MapToProductAsync(ProductDto dto)
+        {
+          var genres = await _context.Genre.Where(g => dto.Genres.Contains(g.Name)).ToArrayAsync();
+          var features = await _context.Feature.Where(g => dto.Features.Contains(g.Name)).ToArrayAsync();
+          var platforms = await _context.Platform.Where(g => dto.Platforms.Contains(g.Name)).ToArrayAsync();
+
+          var product = new Product() {
+            Title = dto.Title,
+            Author = dto.Author,
+            Description = dto.Description,
+            Price = dto.Price,
+            TimeCreated = dto.TimeCreated,
+            PreviewImage = dto.PreviewImage,
+            MainImage = dto.MainImage,
+            Genres = genres,
+            Features = features,
+            Platforms = platforms
+          };
+
+          return product;
+        }
     }
 }
