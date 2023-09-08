@@ -86,80 +86,100 @@ namespace catalog.Data
 
       public async Task<ProductDto> CreateProduct(ProductDto dto)
       {
-        var product = await MapToProductAsync(dto);
+        var genres = await _context.Genre.Where(g => dto.Genres.Contains(g.Name)).ToListAsync();
+        var features = await _context.Feature.Where(g => dto.Features.Contains(g.Name)).ToListAsync();
+        var platforms = await _context.Platform.Where(g => dto.Platforms.Contains(g.Name)).ToListAsync();
+
+        var product = new Product() {
+          Title = dto.Title,
+          Author = dto.Author,
+          Description = dto.Description,
+          Price = dto.Price,
+          TimeCreated = dto.TimeCreated,
+          PreviewImage = dto.PreviewImage,
+          MainImage = dto.MainImage,
+          Genres = genres,
+          Features = features,
+          Platforms = platforms
+        };
+
         
         _context.Product.Add(product);
 
         await _context.SaveChangesAsync();
 
+        dto.Id = product.Id;
+
         return dto;
       }
 
-      public async Task<ProductDto> UpdateProduct(ProductDto dto)
+      public async Task<Product> UpdateProduct(Product product)
       {
-        var product = await _context.Product.Where(p => p.Id == dto.Id).FirstOrDefaultAsync();
+        using var transaction = _context.Database.BeginTransaction();
 
-        if(product == null)
+        try
         {
-          return null;
-        }
 
-        var genres = await _context.Genre.Where(g => dto.Genres.Contains(g.Name)).ToArrayAsync();
-        var features = await _context.Feature.Where(g => dto.Features.Contains(g.Name)).ToArrayAsync();
-        var platforms = await _context.Platform.Where(g => dto.Platforms.Contains(g.Name)).ToArrayAsync();
-        
-        product.Author = dto.Author;
-        product.Title = dto.Title;
-        product.Description = dto.Description;
-        product.Price = dto.Price;
-        product.TimeCreated = product.TimeCreated;
-        product.Genres = genres;
-        product.Features = features;
-        product.Platforms =platforms;
+          var productForUpdate = await _context.Product
+            .Include(p => p.Genres)
+            .Include(p => p.Features)
+            .Include(p => p.Platforms)
+            .SingleOrDefaultAsync(p => p.Id == product.Id);
 
-        _context.Product.Update(product);
-
-        await _context.SaveChangesAsync();
-        
-        return dto;
-      }
-
-        public async Task<bool> DeleteProduct(int id)
-        {
-          var product = await _context.Product.FirstOrDefaultAsync(p => p.Id == id);
-
-          if(product == null)
+          if(productForUpdate == null)
           {
-            return false;
+            return null;
           }
 
-          _context.Product.Remove(product);
+          var genres = await _context.Genre.Where(g => product.Genres.Contains(g)).ToListAsync();
+          var features = await _context.Feature.Where(g => product.Features.Contains(g)).ToListAsync();
+          var platforms = await _context.Platform.Where(g => product.Platforms.Contains(g)).ToListAsync();
+
+          productForUpdate.Genres.Clear();        
+          productForUpdate.Features.Clear();
+          productForUpdate.Platforms.Clear();
 
           await _context.SaveChangesAsync();
 
-          return true;
-        }
+          productForUpdate.Title = product.Title;
+          productForUpdate.Author = product.Author;
+          productForUpdate.Description = product.Description;
+          productForUpdate.Price = product.Price;
+          productForUpdate.TimeCreated = product.TimeCreated;
+          productForUpdate.PreviewImage = product.PreviewImage;
+          productForUpdate.MainImage = product.MainImage;
+          productForUpdate.Genres.AddRange(genres);
+          productForUpdate.Features.AddRange(features);
+          productForUpdate.Platforms.AddRange(platforms);
 
-        private async Task<Product> MapToProductAsync(ProductDto dto)
-        {
-          var genres = await _context.Genre.Where(g => dto.Genres.Contains(g.Name)).ToArrayAsync();
-          var features = await _context.Feature.Where(g => dto.Features.Contains(g.Name)).ToArrayAsync();
-          var platforms = await _context.Platform.Where(g => dto.Platforms.Contains(g.Name)).ToArrayAsync();
+          await _context.SaveChangesAsync();
 
-          var product = new Product() {
-            Title = dto.Title,
-            Author = dto.Author,
-            Description = dto.Description,
-            Price = dto.Price,
-            TimeCreated = dto.TimeCreated,
-            PreviewImage = dto.PreviewImage,
-            MainImage = dto.MainImage,
-            Genres = genres,
-            Features = features,
-            Platforms = platforms
-          };
-
+          transaction.Commit();
+          
           return product;
+
         }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
+      }
+
+      public async Task<bool> DeleteProduct(int id)
+      {
+        var product = await _context.Product.FirstOrDefaultAsync(p => p.Id == id);
+
+        if(product == null)
+        {
+          return false;
+        }
+
+        _context.Product.Remove(product);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+      }
     }
 }

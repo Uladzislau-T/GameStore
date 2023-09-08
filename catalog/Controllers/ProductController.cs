@@ -3,6 +3,7 @@ using catalog.Models.Dto;
 using catalog.Models.Interfaces;
 using catalog.Models.Dto.Requests;
 using Microsoft.AspNetCore.Mvc;
+using catalog.Models;
 
 namespace catalog.Controllers;
 
@@ -44,20 +45,21 @@ public class ProductController : ControllerBase
 
     [HttpPut]
     [ProducesResponseType((int)HttpStatusCode.Created)]
-    public async Task<ActionResult<ProductDto>> UpdateProduct([FromBody] ProductDto dto)
+    public async Task<ActionResult<Product>> UpdateProduct([FromBody] Product product)
     {     
-        var result = await _productRepository.UpdateProduct(dto);
+        var result = await _productRepository.UpdateProduct(product);
 
         if(result == null)
         {
             return NotFound();
         }   
 
-        return result;
+        return product;
     }
 
+    [Route("{id}")]
     [HttpDelete]
-    public async Task<ActionResult> CreateProduct([FromQuery] int id)
+    public async Task<ActionResult> DeleteProduct([FromRoute] int id)
     {      
         var result = await _productRepository.DeleteProduct(id);
 
@@ -68,7 +70,4 @@ public class ProductController : ControllerBase
 
         return NoContent();
     }
-
-    // [HttpPost]
-    // public async Task<> CreateCart()
 }

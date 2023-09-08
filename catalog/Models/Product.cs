@@ -8,21 +8,17 @@ namespace catalog.Models
     public class Product : IComparable<Product>
     {
         public int Id { get; set; }
-        [Required]
         public string Author { get; set; }
-        [Required]
-        public string Title { get; set; }
-        
+        public string Title { get; set; }        
         public string Description { get; set; }
-        [Required]
         public decimal Price { get; set; }
         public string PreviewImage { get; set; }
         public string MainImage { get; set; }
         
         public DateTimeOffset TimeCreated { get; set; }
-        public IEnumerable<Genre> Genres { get; set; }
-        public IEnumerable<Feature> Features { get; set; }
-        public IEnumerable<Platform> Platforms { get; set; }
+        public List<Genre> Genres { get; set; }
+        public List<Feature> Features { get; set; }
+        public List<Platform> Platforms { get; set; }
 
         public int CompareTo(Product o)
         {

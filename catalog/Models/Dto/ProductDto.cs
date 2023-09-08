@@ -5,7 +5,7 @@ using catalog.Filters.ValidationAttributes;
 namespace catalog.Models.Dto
 {      
     public class ProductDto {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required]
         public string Author { get; set; }
         [Required]
@@ -14,12 +14,17 @@ namespace catalog.Models.Dto
         public string Description { get; set; }
         [Required]
         public decimal Price { get; set; }
+        [Required]
         public string PreviewImage { get; set; }
+        [Required]
         public string MainImage { get; set; }        
-        // [ValidDate]
+        [ValidDate]
         public DateTimeOffset TimeCreated { get; set; }
-        public IEnumerable<string> Genres { get; set; }
-        public IEnumerable<string> Features { get; set; }
-        public IEnumerable<string> Platforms { get; set; }
+        [Required]
+        public ICollection<string> Genres { get; set; }
+        [Required]
+        public ICollection<string> Features { get; set; }
+        [Required]
+        public ICollection<string> Platforms { get; set; }
     }
 }
