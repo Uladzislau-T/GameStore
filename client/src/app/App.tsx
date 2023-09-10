@@ -9,6 +9,11 @@ import { classNames } from '../utils/classNames/classNames';
 import { AppRouter } from './providers/router';
 import { Footer } from '../components/footer';
 import { Navbar } from '../components/navbar';
+import PageLoader from '../widgets/pageLoader/ui/pageLoader';
+import { StartPage } from '../pages/startpage';
+import { Catalog } from '../pages/catalog';
+import { StartPageAsync } from '../pages/startpage/ui/startpage.async';
+import { CatalogAsync } from '../pages/catalog/ui/catalog.async';
 
 interface AppProps {}
 
@@ -23,16 +28,13 @@ export const App: FC<AppProps> = () => {
       navigate(routes.startPage.path);
     }
   }, [auth.isLoggedIn]);
-
   
 
   return (
     <div className={classNames("app",{}, [theme])}>
-      <Suspense fallback="">
         <Navbar className='' />      
         <AppRouter/>
         <Footer/>
-      </Suspense>
     </div>
   );
 }

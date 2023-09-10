@@ -38,7 +38,7 @@ function Footer() {
             </ul>
           </div>
           <div className={cls["footer-col"]}>
-            <h4>follow us</h4>
+            <h4>{t("follow us")}</h4>
             <div className={cls["subscribe-form"]}>
               <form action="#">
                   <input type="text" placeholder={t("Email Placeholder")}/>
@@ -53,7 +53,7 @@ function Footer() {
             </div>
           </div>
         </div>
-        <p>{t("Copyright")} © {new Date().getFullYear()} GameStore. {t("Rights")}</p>
+        <p className={cls.copyright}>{t("Copyright")} © {new Date().getFullYear()} GameStore. {t("Rights")}</p>
       </div>
     </footer>   
   );

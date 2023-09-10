@@ -1,3 +1,6 @@
 {
-  "Translate":"RU"
+  "Translate": "RU",
+  "Not Found": "Страницу, которую вы ищите не существует :( Check the address or report an error.",
+  "Error": "Произошла непредвиденная ошибка",
+  "Reload page": "Перезагрузить страницу"
 }

@@ -1,14 +1,15 @@
-import { ButtonHTMLAttributes, FC } from "react";
+import { ButtonHTMLAttributes, FC, useEffect, useState } from "react";
 import cls from "./button.module.scss"
 import { classNames } from "../../utils/classNames/classNames";
 
 export enum ThemeButton {
-  CLEAR = 'clear'
+  CLEAR = 'clear',
+  NONE = ''
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> { //интерфейс , который подгружает стандартные свойства кнопки
   className?:string,
-  theme?: ThemeButton
+  theme?: ThemeButton,
 }
  
 const Button: FC<ButtonProps> = (props) => {
@@ -19,11 +20,25 @@ const Button: FC<ButtonProps> = (props) => {
     ...otherProps
   } = props
 
+  const [themeClass, setThemeClass] = useState<string>("")
+
+  useEffect(() => {
+    switch (theme) {
+      case ThemeButton.CLEAR:
+        setThemeClass(cls.clear)
+        break;
+      // case ThemeButton.CLEAR:
+      //   setThemeClass("")
+      //   break;
+      default:
+        break;
+    }
+  }, [])
 
   return (
     <button 
       type="button"
-      className={classNames(cls.button, {}, [className || '', cls.clear])}
+      className={classNames(cls.button, {}, [className || '', themeClass])}
       {...otherProps}   
     >
       {children}

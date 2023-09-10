@@ -1,4 +1,6 @@
 {
-  "Translate":"EN",
-  "Not Found": "The page you‘re trying to reach does not exist :( Check the address or report an error."
+  "Translate": "EN",
+  "Not Found": "The page you‘re trying to reach does not exist :( Check the address or report an error.",
+  "Error": "An unexpected error occurred",
+  "Reload page": "Reload page"
 }
