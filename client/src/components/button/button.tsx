@@ -3,8 +3,8 @@ import cls from "./button.module.scss"
 import { classNames } from "../../utils/classNames/classNames";
 
 export enum ThemeButton {
-  CLEAR = 'clear',
-  NONE = ''
+  CLEAR = "clear",
+  BACKGROUND = "background",
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> { //интерфейс , который подгружает стандартные свойства кнопки
@@ -27,9 +27,9 @@ const Button: FC<ButtonProps> = (props) => {
       case ThemeButton.CLEAR:
         setThemeClass(cls.clear)
         break;
-      // case ThemeButton.CLEAR:
-      //   setThemeClass("")
-      //   break;
+      case ThemeButton.BACKGROUND:
+        setThemeClass(cls.background)
+        break;
       default:
         break;
     }

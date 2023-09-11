@@ -6,7 +6,6 @@ import { getAllProducts } from '../../../app/core/API/gameService';
 import { useAppDispatch, useTypedSelector } from '../../../app/store/store';
 import { classNames } from '../../../utils/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import { TempErrorButton } from '../../errorPage';
 
  
 function StartPage() {

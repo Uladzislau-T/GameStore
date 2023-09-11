@@ -6,6 +6,8 @@
   position: relative;
   float: right;
   transition: width 0.3s;
+  // margin-top: 10px;
+  border-top: solid 1px rgb(107, 76, 121);
 }
 
 .collapsed{
@@ -27,3 +29,30 @@
 .lang{
   margin-left: 20px;
 }
+
+.sidebarList{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+  // height: 100%;
+}
+
+.sidebarLink{
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 1px rgb(107, 76, 121);
+}
+
+.sidebar_login{
+  position: absolute;
+  bottom: 80px;
+  justify-content: center;
+  width: 100%;
+}
+
+// .collapsed > .sidebar_lowerMenu{
+//   display: none;
+// }

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { classNames } from "../../../utils/classNames/classNames";
 import cls from "./navbar.module.scss"
 import { useTheme } from "../../../app/providers/ThemeProvider/lib/useTheme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sidebar } from "../../sidebar";
 import { ThemeSwitcher } from "../../../widgets/themeSwitcher";
 import { useTranslation } from "react-i18next";
@@ -10,7 +10,7 @@ import { LangSwitcher } from "../../../widgets/langSwitcher";
 
 
 interface NavbarProps {
-  className: string
+  className?: string
 }
  
 const Navbar = ({className}: NavbarProps) => {
@@ -22,11 +22,22 @@ const Navbar = ({className}: NavbarProps) => {
     setCollapsed(prev => !prev)
   }
 
+  function handleSidebarResize(){
+    if(window.innerWidth >= 800)
+      setCollapsed(true)
+  }
+
+  useEffect(() => {
+   window.addEventListener("resize", handleSidebarResize) 
+   
+   return () => window.removeEventListener("resize", handleSidebarResize)
+  })
+
   return ( 
-  <div className={classNames(cls.navbar, {}, [className])}>
+  <div className={classNames(cls.navbar, {}, [className || ""])}>
     <div className={cls.navOne}>
       <div className={cls.navOne_content}>
-        <input type="checkbox"  id={cls.menu_toggle} onChange={handleCollapsing}></input>
+        <input type="checkbox"  id={cls.menu_toggle} onChange={handleCollapsing} data-testid="sidebar-toggle"></input>
         <Link to="" className={cls.brand}>
           <i>
             <span style={{color:"#CF1796"}}>
@@ -70,9 +81,20 @@ const Navbar = ({className}: NavbarProps) => {
               <li><Link to="" className="">American Market</Link></li>              
             </ul> */}
           </div>          
+        </div>       
+        <div className={cls.navLoginCart}>
+          <Link to="/sign-in"  className={[cls.dropLink_nav_login, cls.navOne_cart].join(" ")}><i style={{color:"#b791e5", marginRight:"25px"}} className="fas fa-user">
+            </i>
+          </Link>
+          <a href="/" className={cls.dropLink_nav_login}><i style={{color:"#b791e5", marginRight:"0px"}} className="fas fa-shopping-cart">
+            <sup style={{color:"#f04242", fontSize:"12px",}}> ( 2 )<span> $15</span></sup>
+            </i>
+          </a>
         </div>
-        <ThemeSwitcher className={cls.navbar_theme_visible}/>
-        <LangSwitcher className={cls.lang}/>
+        <div className={cls.navOne_menusRight}>
+          <ThemeSwitcher className={cls.navbar_theme_visible}/>
+          <LangSwitcher className={[cls.lang, cls.navbar_theme_visible].join(" ")}/>
+        </div>
         <div className={cls.navBtn}>      
           <label htmlFor={cls.menu_toggle}>        
             <span></span>

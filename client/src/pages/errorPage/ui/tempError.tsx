@@ -20,7 +20,6 @@ const TempErrorButton: FC<TempErrorButtonProps> = ({className}:TempErrorButtonPr
   return (
     <Button 
       onClick={throwError}
-      theme={ThemeButton.NONE}
       className={classNames("", {}, [className || ""])}
     >
       throw Error

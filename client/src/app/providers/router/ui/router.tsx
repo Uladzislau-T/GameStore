@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "../config/routes";
 import PageLoader from "../../../../widgets/pageLoader/ui/pageLoader";
+import { Footer } from "../../../../components/footer";
  
 const AppRouter = () => {  
   return ( 
@@ -17,6 +18,7 @@ const AppRouter = () => {
           )
         })}
       </Routes>
+      <Footer/>
     </Suspense>
    );
 }
