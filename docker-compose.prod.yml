@@ -1,0 +1,49 @@
+version: '3.8'
+
+# networks:
+#   cart-db-bridge:  # как бд и бек соединяются
+#     driver: bridge
+#   # catalog-db-bridge:  # как бд и бек соединяются
+#   #   driver: bridge
+
+
+# services:
+
+#   cartsqldata:
+#     image: postgres:latest
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: 1234
+#       POSTGRES_DB: cart  # название базы данных
+#     ports:
+#       - "5432:5432" # первый ip опционален, так как тип соединения bridge и соединятся будет по имени сервиса
+#     networks:
+#       - cart-db-bridge
+#     volumes:
+#       - gamestore-cartsqldata:/var/lib/postgresql/data
+
+  # catalogsqldata:
+  #     # container_name: postgres #change postgres_host to postgres in development.env when will be ready to use
+  #     image: postgres:latest
+  #     env_file:
+  #       - services/catalog/.production.env
+  #     # environment:
+  #     #   POSTGRES_USER: postgres
+  #     #   POSTGRES_PASSWORD: 1234
+  #     #   POSTGRES_DB: catalog  # название базы данных
+  #     ports:
+  #       - "5433:5432"
+  #     volumes:
+  #       - gamestore-catalogsqldata:/var/lib/postgresql/data
+  #     networks:
+  #       - catalog-db-bridge
+
+  # cart:
+  #   environment:
+  #     - name=value
+  #   ports:
+  #     - 
+  #   depends_on:   # не запустит приложение до старта базы данных
+  #     - cartsqldata
+  #   networks:
+  #     - cart-db-bridge

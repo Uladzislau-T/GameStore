@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+
+  sqldata:
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      # POSTGRES_DB: cart  # название базы данных
+    ports:
+      - "5432:5432"
+    volumes:
+      - gamestore-sqldata:/var/lib/postgresql/data
+
+  # nosqldata:
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - gamestore-nosqldata:/data
+
+  # identity-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://0.0.0.0:80
+  #     - SpaClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8005      
+  #     - CartApiClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8003
+  #     # - OrderingApiClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8004
+  #     - WebAggClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8021
+  #   depends_on:   # не запустит приложение до старта базы данных
+  #     - sqldata
+  #   ports:
+  #     - "8001:80" # внешний и внутренний порт
+
+  catalog-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
+      # - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:81
+      # - Kestrel__Endpoints__GRPC__Protocols=Http2
+      # - PicBaseUrl=${GAMESTORE_STORAGE_CATALOG_URL}
+      # - PATH_BASE=/catalog-api
+    ports:
+      - "8002:80"
+      - "9002:81"
+    depends_on:
+      - sqldata 
+
+  # cart-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     # - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
+  #     # - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:81
+  #     # - Kestrel__Endpoints__GRPC__Protocols=Http2
+  #     # - Identity__Url=http://identity-api
+  #     # - Identity__ExternalUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8001
+  #   depends_on:   # не запустит приложение до старта базы данных
+  #     - nosqldata
+  #   ports:
+  #     - "8003:80" # внешний и внутренний порт   
+  #     - "9003:81"   
+
+  # webagg:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - urls__cart=http://cart-api
+  #     - urls__catalog=http://catalog-api
+  #     # - urls__orders=http://ordering-api
+  #     - urls__identity=http://identity-api
+  #     - urls__grpcCart=http://cart-api:81
+  #     - urls__grpcCatalog=http://catalog-api:81
+  #     # - urls__grpcOrdering=http://ordering-api:81
+  #     - ReverseProxy__Clusters__basket__Destinations__destination0__Address=http://basket-api
+  #     - ReverseProxy__Clusters__catalog__Destinations__destination0__Address=http://catalog-api
+  #     - ReverseProxy__Clusters__orders__Destinations__destination0__Address=http://ordering-api
+  #     # - ReverseProxy__Clusters__signalr__Destinations__destination0__Address=http://ordering-signalrhub
+  #     - Identity__Url=http://identity-api
+  #     - Identity__ExternalUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8001
+  #   ports:
+  #     - "8021:80"
+
+
+
+volumes:
+  gamestore-sqldata:
+    external: false
+  # gamestore-nosqldata:
+  #   external: false
