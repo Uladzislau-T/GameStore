@@ -3,7 +3,7 @@ using AutoMapper;
 using catalog.Models;
 using catalog.Models.Dto;
 
-namespace Name
+namespace catalog.Profiles
 {
   public class ProductProfile: Profile
   {

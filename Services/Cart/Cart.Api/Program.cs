@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using cart.Connections.Grpc;
 using cart.Data;
+using cart.Extentions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ else
     builder.Services.AddDbContext<Context>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("cartConn")));
 }
+
+builder.Services.AddRedis(builder.Configuration);
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -49,13 +52,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseEndpoints(e => {
-    // e.MapGrpcService<GrpcCartService>();
-    // e.MapGet("/protos/cart.proto", async context =>
-    // {
-    //     await context.Response.WriteAsync(File.ReadAllText("Protos/cart.proto"));
-    // });
-});
+app.MapGrpcService<CartService>();
 
 PrepDb.PrepPopulation(app, app.Environment.IsProduction()); 
 

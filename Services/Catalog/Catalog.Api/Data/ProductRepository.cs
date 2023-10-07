@@ -5,20 +5,29 @@ using catalog.Models.Dto;
 using catalog.Models.Interfaces;
 using catalog.Models.Dto.Requests;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
+using System.Text.Json;
 
 namespace catalog.Data
 {
     public class ProductRepository : IProductRepository
     {
       private readonly Context _context;
+      private readonly ConnectionMultiplexer _redis;
+      private readonly IDatabase _database;
       private readonly IMapper _mapper;
-      public ProductRepository(Context context, IMapper mapper)
+      private readonly ILogger<CategoryRepository> _logger;
+
+      public ProductRepository(Context context, ConnectionMultiplexer redis, IMapper mapper, ILogger<CategoryRepository> logger)
       {
         _context = context;
+        _redis = redis;
+        _database = redis.GetDatabase();
         _mapper = mapper;
+        _logger = logger;
       }      
 
-        public async Task<ResponseProductDto> GetProducts(RequestProduct request)
+      public async Task<ResponseProductDto> GetProducts(RequestProduct request)
       {
         var genres = request.Genres != string.Empty ? request.Genres?.Split(",") : Array.Empty<string>();
         var features = request.Features != string.Empty ? request.Features?.Split(",") : Array.Empty<string>();
@@ -81,6 +90,37 @@ namespace catalog.Data
         var productsDto = _mapper.Map<IEnumerable<ProductDto>>(rawProducts);
 
         return new ResponseProductDto(productsDto, productsCount); 
+      }
+
+      public async Task<IEnumerable<ProductDto>> GetProductByIds(IEnumerable<int> ids)
+      {
+        var keys = ids.Select(i => {return $"product:{i}";});
+
+        var redisProducts = _database.getall
+
+        var categories = await _database.StringGetAsync("categories");
+
+        IEnumerable<ProductDto> productsDto;
+        if(!categories.IsNullOrEmpty)
+        {
+          // var cachedDataString = Encoding.UTF8.GetString(categories);
+          response = JsonSerializer.Deserialize<ResponseCategoriesDto>(categories, JsonDefaults.CaseInsensitiveOptions);
+
+          _logger.LogInformation("Responsed with cached items");
+
+          return response;
+        }
+
+        var products = await _context.Product.Where(p => ids.Contains(p.Id)).ToArrayAsync();
+
+        if(products == null || products.Length == 0)
+        {
+          throw new InvalidOperationException("There are no items in db with such ids");
+        }
+
+        productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+
+        return productsDto;
       }
 
       public async Task<ProductDto> CreateProduct(ProductDto dto)

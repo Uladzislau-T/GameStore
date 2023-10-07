@@ -12,6 +12,15 @@
       "sourceFileMap": {
         "/src": "${workspaceFolder}"
       }
+    },
+    {
+      "name": "Docker .NET Attach (Preview)",
+      "type": "docker",
+      "request": "attach",
+      "platform": "netCore",
+      "sourceFileMap": {
+        "/src": "${workspaceFolder}"
+      }
     }
   ]
 }

@@ -1,8 +1,7 @@
 using AutoMapper;
-using cart;
 using cart.Models;
 
-namespace PlatformService.Profiles
+namespace cart.Infrastructure.Profiles
 {
     public class CartMapping : Profile
     {

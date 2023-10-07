@@ -1,12 +1,6 @@
 ﻿version: '3.8' # зависит от версии docker engine
 
-services:
-
-  sqldata:
-    image: postgres:latest
-
-  nosqldata:
-    image: redis:alpine
+services: 
   
   # identity-api:
   #   image: ${REGISTRY:-gamestore}/identity.api:${PLATFORM:-linux}-${TAG:-latest}
@@ -17,8 +11,8 @@ services:
   catalog-api:
     image: ${REGISTRY:-gamestore}/catalog.api:${PLATFORM:-linux}-${TAG:-latest}
     build:
-      context: ./Services/Catalog/Catalog.Api
-      dockerfile: Dockerfile 
+      context: .
+      dockerfile: Services/Catalog/Catalog.Api/Dockerfile 
 
   cart-api:
     image: ${REGISTRY:-gamestore}/cart.api:${PLATFORM:-linux}-${TAG:-latest}

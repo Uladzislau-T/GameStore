@@ -1,34 +1,21 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app   
 
-COPY catalog.csproj ./
-RUN dotnet restore
+    
+COPY ./Services/Catalog/Catalog.Api/*.csproj ./Services/Catalog/Catalog.Api/
+COPY ./Services/Services.Common/*.csproj ./Services/Services.Common/
 
-COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet restore ./Services/Catalog/Catalog.Api/catalog.csproj
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
-WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT [ "dotnet", "catalog.dll"]
+COPY . .
+WORKDIR "/app/Services/Catalog/Catalog.Api"
+RUN dotnet build "catalog.csproj" -c Release 
 
-# FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-# WORKDIR /app
-# EXPOSE 80
-# EXPOSE 443
+FROM build as publish
+RUN dotnet publish "catalog.csproj" -c Release -o /app/publish
+ 
 
-# FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-# WORKDIR /src
-# COPY ["cart.csproj", "."]
-# RUN dotnet restore "./cart.csproj"
-# COPY . .
-# WORKDIR "/src/."
-# RUN dotnet build "cart.csproj" -c Release -o /app/build
-
-# FROM build AS publish
-# RUN dotnet publish "cart.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-# FROM base AS final
-# WORKDIR /app
-# COPY --from=publish /app/publish .
-# ENTRYPOINT ["dotnet", "cart.dll", "--environment=Development"]
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app 
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "catalog.dll"]

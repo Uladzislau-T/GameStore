@@ -17,9 +17,9 @@ public class CategoryController : ControllerBase
     _categoryRepository = categoryRepository;
   }
 
-  public async Task<ResponseCategoriesDto> GetFilterCategories()
+  public async Task<ResponseCategoriesDto> GetAllCategories()
   {
-    var result = await _categoryRepository.GetCategories();
+    var result = await _categoryRepository.GetAllCategoriesAsync();
 
     return result;
   }  

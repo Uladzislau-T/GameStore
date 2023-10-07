@@ -34,6 +34,7 @@ namespace cart.Data
                 context.Cart.Add(
                     new Cart() { 
                       BuyerId = 1, 
+                      TotalPrice = 7.50m,
                       Items = new List<CartItem>() {
                         new CartItem() {
                           Id = 1,

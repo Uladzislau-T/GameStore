@@ -6,6 +6,6 @@ namespace catalog.Models.Interfaces
 {
   public interface ICategoryRepository
   {
-    Task<ResponseCategoriesDto> GetCategories();
+    Task<ResponseCategoriesDto> GetAllCategoriesAsync();
   }
 }

@@ -29,6 +29,18 @@ public class ProductController : ControllerBase
         return Ok(result);
     }
 
+    public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsByIds(int[] ids)
+    {
+        if(ids == null || ids.Length == 0)
+        {
+            return BadRequest("Need to pass at least one id");
+        }
+
+        var result = await _productRepository.GetProductByIds(ids);
+
+        return Ok(result);
+    }
+
     [HttpPost]
     [ProducesResponseType((int)HttpStatusCode.Created)]
     public async Task<ActionResult<ProductDto>> CreateProduct([FromBody] ProductDto dto)

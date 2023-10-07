@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
+using cart.Connections.Grpc;
 using catalog.Data;
+using catalog.Extentions;
 using catalog.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,18 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 // infrastructure services
 
 var isDev = builder.Environment.IsDevelopment();
-if (!isDev)
-{
-    Console.WriteLine("--> Using Docker Prod Db");
-    builder.Services.AddDbContext<Context>(opt =>
-        opt.UseNpgsql(builder.Configuration.GetConnectionString("catalogConn")));
-}
-else
-{
-    Console.WriteLine("--> Using DevLocalDb");
-    builder.Services.AddDbContext<Context>(opt =>
+
+Console.WriteLine("--> Using Docke Db");
+builder.Services.AddDbContext<Context>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("catalogConn")));
-}
+
+
+builder.Services.AddRedis(builder.Configuration);
+
+builder.Services.AddGrpc();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -55,6 +54,7 @@ app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGrpcService<CatalogService>();
 
 PrepDb.PrepPopulation(app, false);
 

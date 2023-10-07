@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cart.Connections.Grpc
 {
-  public class GrpcCartService : GrpcCart.GrpcCartBase
+  public class CartService : GrpcCart.GrpcCartBase
   {
     private readonly Context _context;
     private readonly IMapper _mapper;
 
-    public GrpcCartService(Context context, IMapper mapper)
+    public CartService(Context context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -19,24 +19,24 @@ namespace cart.Connections.Grpc
 
     public override async Task<CartResponse> GetAllCarts(GetAllCartsRequest request, ServerCallContext context)
     {
-      
-        var response = new CartResponse();
-        var carts = await _context.Cart.ToListAsync();
+      context.Status = new Status(StatusCode.OK, $"Basket with id  do exist");
+      var response = new CartResponse();
+      var carts = await _context.Cart.ToListAsync();
 
-        foreach (var cart in carts)
-        {          
-          var grpcCart = new GrpcCartModel() {
-            Id = cart.Id,
-            BuyerId = cart.BuyerId,
-          };
+      foreach (var cart in carts)
+      {          
+        var grpcCart = new GrpcCartModel() {
+          Id = cart.Id,
+          BuyerId = cart.BuyerId,
+        };
 
-          grpcCart.Items.AddRange(ConvertToGrpcCartItem(cart.Items));
+        grpcCart.Items.AddRange(ConvertToGrpcCartItem(cart.Items));
 
-          // response.Carts.Add(_mapper.Map<GrpcCartModel>(cart));
-          response.Carts.Add(grpcCart);
-        }
+        // response.Carts.Add(_mapper.Map<GrpcCartModel>(cart));
+        response.Carts.Add(grpcCart);
+      }
 
-        return response;
+      return response;
     }
 
     private List<GrpcCartItemModel> ConvertToGrpcCartItem(ICollection<CartItem> items)

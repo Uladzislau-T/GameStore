@@ -1,7 +1,58 @@
 syntax = "proto3";
 
-option csharp_namespace = "cart";
+option csharp_namespace = "catalog";
+import "google/protobuf/timestamp.proto";
 
-service GrpcCart{
+service GrpcCatalog{
+  rpc GetProductByIds(GrpcProductIdsRequest) returns (GrpcProductDtosResponse) {}
+  rpc GetAllCategories(GrpcCategoriesRequest) returns (GrpcCategoriesResponse) {}
 }
 
+message GrpcProductIdsRequest
+{
+  repeated int32 ids = 1;
+}
+
+message GrpcProductDtosResponse 
+{
+  repeated GrpcProductDtoModel productDtos= 1;
+}
+
+message GrpcProductDtoModel
+{
+  int32 id = 1;
+  string author = 2;
+  string title = 3;
+  string description = 4;
+  DecimalValue price = 5;
+  google.protobuf.Timestamp timeCreated = 6;
+  string previewImage = 7;
+  string mainImage = 8;
+  repeated string genres = 9;
+  repeated string features = 10;
+  repeated string platforms = 11;
+}
+
+message DecimalValue {   
+    int64 units = 1;    
+    sfixed32 nanos = 2;
+}
+
+////////// Categories //////////
+
+message GrpcCategoriesRequest {}
+
+message GrpcCategoriesResponse {
+  GrpcCategoriesModel categories = 1;
+}
+
+message GrpcCategoriesModel {
+  repeated GrpcCategoryModel genres = 1;
+  repeated GrpcCategoryModel features = 2;
+  repeated GrpcCategoryModel platforms = 3;
+}
+
+message GrpcCategoryModel {
+  int32 id = 1;
+  string name = 2;
+}
