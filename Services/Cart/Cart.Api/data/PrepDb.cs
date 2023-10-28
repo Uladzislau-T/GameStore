@@ -14,18 +14,18 @@ namespace cart.Data
 
         private static void SeedData(Context context, bool isProd)
         {
-            // if (isProd)
-            // {
-                Console.WriteLine("--> Attempting to apply migrations...");
-                try
-                {
-                    context.Database.Migrate();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"--> Could not run migrations: {ex.Message}");
-                }
-            // }
+            // // if (isProd)
+            // // {
+            //     Console.WriteLine("--> Attempting to apply migrations...");
+            //     try
+            //     {
+            //         context.Database.Migrate();
+            //     }
+            //     catch (Exception ex)
+            //     {
+            //         Console.WriteLine($"--> Could not run migrations: {ex.Message}");
+            //     }
+            // // }
 
             if (!context.Cart.Any())
             {
@@ -33,11 +33,10 @@ namespace cart.Data
 
                 context.Cart.Add(
                     new Cart() { 
-                      BuyerId = 1, 
+                      ClientId = 1, 
                       TotalPrice = 7.50m,
                       Items = new List<CartItem>() {
                         new CartItem() {
-                          Id = 1,
                           ProductId = 1,
                           ProductName = "Gothic",
                           UnitPrice = 7.50m,

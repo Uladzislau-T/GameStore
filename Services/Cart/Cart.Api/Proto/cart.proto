@@ -3,19 +3,38 @@ syntax = "proto3";
 option csharp_namespace = "cart";
 
 service GrpcCart{
-  rpc GetAllCarts (GetAllCartsRequest) returns (CartResponse);
+  rpc GetAllCarts (GrpcGetAllCartsRequest) returns (GrpcCartsResponse);
+  rpc GetCartByClient (GrpcGetCartRequest) returns (GrpcCartResponse);
+  rpc GetCartBySession (GrpcGetCartRequest) returns (GrpcCartResponse);
+  rpc UpdateCart (GrpcUpdateCartRequest) returns (GrpcUpdateCartResponse);
 }
 
-message GetAllCartsRequest {}
+message GrpcGetAllCartsRequest {}
 
-message CartResponse {
+message GrpcGetCartRequest {
+  int32 id = 1;
+}
+
+message GrpcUpdateCartRequest {
+  GrpcCartModel cart = 1;
+}
+
+message GrpcCartsResponse {
   repeated GrpcCartModel carts = 1;
 }
 
+message GrpcCartResponse {
+  GrpcCartModel cart = 1;
+}
+
+message GrpcUpdateCartResponse {
+  GrpcCartModel cart = 1;
+}
+
 message GrpcCartModel {
-  int32 id = 1;
-  int32 buyerId = 2;
-  repeated GrpcCartItemModel items = 3;
+  int32 clientId = 2;
+  DecimalValue totalPrice = 3;
+  repeated GrpcCartItemModel items = 4;
 }
 
 message GrpcCartItemModel {
@@ -26,8 +45,6 @@ message GrpcCartItemModel {
   int32 quantity = 5;
   string pictureUrl = 6;
 }
-
-package CustomTypes;
 
 message DecimalValue {   
     int64 units = 1;    

@@ -2,7 +2,7 @@
 
 namespace Services.Common;
 
-public static class JsonDefaults
+public static class CommonJsonDefaults
 {
     public static readonly JsonSerializerOptions CaseInsensitiveOptions = new()
     {

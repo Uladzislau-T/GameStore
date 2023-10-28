@@ -93,24 +93,7 @@ namespace catalog.Data
       }
 
       public async Task<IEnumerable<ProductDto>> GetProductByIds(IEnumerable<int> ids)
-      {
-        var keys = ids.Select(i => {return $"product:{i}";});
-
-        var redisProducts = _database.getall
-
-        var categories = await _database.StringGetAsync("categories");
-
-        IEnumerable<ProductDto> productsDto;
-        if(!categories.IsNullOrEmpty)
-        {
-          // var cachedDataString = Encoding.UTF8.GetString(categories);
-          response = JsonSerializer.Deserialize<ResponseCategoriesDto>(categories, JsonDefaults.CaseInsensitiveOptions);
-
-          _logger.LogInformation("Responsed with cached items");
-
-          return response;
-        }
-
+      {   
         var products = await _context.Product.Where(p => ids.Contains(p.Id)).ToArrayAsync();
 
         if(products == null || products.Length == 0)
@@ -118,7 +101,7 @@ namespace catalog.Data
           throw new InvalidOperationException("There are no items in db with such ids");
         }
 
-        productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+        var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
 
         return productsDto;
       }

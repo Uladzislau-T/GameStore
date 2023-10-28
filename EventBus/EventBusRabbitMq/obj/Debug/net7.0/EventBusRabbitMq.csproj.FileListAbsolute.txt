@@ -1,0 +1,15 @@
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\bin\Debug\net7.0\EventBusRabbitMq.deps.json
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\bin\Debug\net7.0\EventBusRabbitMq.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\bin\Debug\net7.0\EventBusRabbitMq.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\bin\Debug\net7.0\EventBus.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\bin\Debug\net7.0\EventBus.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.csproj.AssemblyReference.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.GeneratedMSBuildEditorConfig.editorconfig
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.AssemblyInfoInputs.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.AssemblyInfo.cs
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.csproj.CoreCompileInputs.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.csproj.CopyComplete
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\refint\EventBusRabbitMq.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\EventBusRabbitMq.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\EventBus\EventBusRabbitMq\obj\Debug\net7.0\ref\EventBusRabbitMq.dll

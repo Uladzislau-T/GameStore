@@ -1,9 +1,7 @@
 #nullable disable
-using System.Text;
 using System.Text.Json;
 using cart.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Services.Common;
 using StackExchange.Redis;
 
@@ -24,56 +22,85 @@ namespace cart.Data
       _logger = logger;
     }
 
-    public async Task<Cart> GetCartBySessionAsync(string session)
+    public async Task<IEnumerable<Cart>> GetAllCartAsync()
+    {
+      var carts = await _context.Cart.Include(c => c.Items).ToArrayAsync();
+      if(carts == null || carts.Length == 0)
+      {
+        _logger.LogInformation("There are no carts in db");
+        return null;
+      }
+
+      return carts;
+    }
+
+    public async Task<Cart> GetCartBySessionIdAsync(string session)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Cart> GetCartByClientAsync(int clientId)
+    public async Task<Cart> GetCartByClientIdAsync(int clientId)
     {       
-        var categories = await _database.StringGetAsync("cart");
+      var redisCart = await _database.StringGetAsync($"cart:{clientId}");
 
-          Cart response;
-          if(!categories.IsNullOrEmpty)
-          {
-            // var cachedDataString = Encoding.UTF8.GetString(categories);
-            response = JsonSerializer.Deserialize<Cart>(categories, JsonDefaults.CaseInsensitiveOptions);
+      Cart response;
+      if(!redisCart.IsNullOrEmpty)
+      {
+        response = JsonSerializer.Deserialize<Cart>(redisCart, CommonJsonDefaults.CaseInsensitiveOptions);
 
-            _logger.LogInformation("Responsed with cached cart");
-
-            return response;
-          }
-
-          response = await _context.Cart.Include(c => c.Items).SingleOrDefaultAsync(c => c.Id == clientId);
-
-          var stringToCache = JsonSerializer.Serialize<Cart>(response, JsonDefaults.CaseInsensitiveOptions);
-          var dataToCache = Encoding.UTF8.GetBytes(stringToCache);
-
-          DistributedCacheEntryOptions options = new DistributedCacheEntryOptions()
-            .SetAbsoluteExpiration(DateTime.Now.AddMinutes(5))
-            .SetSlidingExpiration(TimeSpan.FromMinutes(3));
-
-          var created = await _database.StringSetAsync("cart", dataToCache);
-
-          if (!created)
-          {
-              _logger.LogInformation("Problem occur persisting the item.");
-              return null;
-          }
-
-          _logger.LogInformation("Cart response persisted successfully.");
+        _logger.LogInformation("Responsed with cached cart");
 
         return response;
+      }
+
+      response = await _context.Cart.Include(c => c.Items).SingleOrDefaultAsync(c => c.ClientId == clientId);
+
+      var stringToCache = JsonSerializer.Serialize<Cart>(response, CommonJsonDefaults.CaseInsensitiveOptions);
+
+      // DistributedCacheEntryOptions options = new DistributedCacheEntryOptions()
+      //   .SetAbsoluteExpiration(DateTime.Now.AddMinutes(5))
+      //   .SetSlidingExpiration(TimeSpan.FromMinutes(3));
+
+      var created = await _database.StringSetAsync($"cart:{response.ClientId}", stringToCache, TimeSpan.FromMinutes(2));
+
+      if (!created)
+      {
+        _logger.LogInformation("Problem occur persisting the item.");
+        return null;
+      }
+
+      _logger.LogInformation("Cart response persisted successfully.");
+
+      return response;
     }
 
     public async Task<Cart> UpdateCartAsync(Cart cart)
     {
-        throw new NotImplementedException();
+      var created = await _database.StringSetAsync($"cart:{cart.ClientId}", JsonSerializer.Serialize(cart, CommonJsonDefaults.CaseInsensitiveOptions));
+      
+      if (!created)
+      {
+        throw new DbUpdateException("Problem occured persisting the item in Redis.");
+      }
+
+      var dbCart = await _context.Cart.Where(c => c.ClientId == cart.ClientId).Include(c => c.Items).FirstOrDefaultAsync();
+
+      if(dbCart != null){
+        _context.Cart.Remove(dbCart);
+      }
+
+      await _context.Cart.AddAsync(cart);
+
+      await _context.SaveChangesAsync();
+
+      _logger.LogInformation("Cart item persisted successfully.");
+
+      return cart;
     }
 
     public async Task<bool> DeleteCartAsync(string id)
     {
-        return await _database.KeyDeleteAsync(id);
-    }        
+      return await _database.KeyDeleteAsync(id);
+    }    
   }
 }

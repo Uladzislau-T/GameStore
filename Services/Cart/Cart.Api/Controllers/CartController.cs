@@ -9,25 +9,24 @@ namespace cart.Controllers
     [Route("api/[controller]")]
     public class CartController : ControllerBase
     {
-      private readonly Context _context;
       private readonly ICartRepository _repository;
-      public CartController(Context context)
+      public CartController(ICartRepository repository)
       {
-        _context = context;
+        _repository = repository;
       }
 
-      [HttpGet]
-        public async Task<ActionResult<Cart>> Get()
-        {
-          var cart = await _context.Cart.Include(c => c.Items).SingleOrDefaultAsync(c => c.Id == 1);
-          return Ok(cart);
-        }
+      // [HttpGet]
+      // public async Task<ActionResult<Cart>> Get()
+      // {
+      //   var cart = await _context.Cart.Include(c => c.Items).SingleOrDefaultAsync(c => c.Id == 1);
+      //   return Ok(cart);
+      // }
 
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task DeleteCartById(string id)
-        {
-            await _repository.DeleteCartAsync(id);
-        }
+      [HttpDelete("{id}")]
+      [ProducesResponseType(StatusCodes.Status200OK)]
+      public async Task DeleteCartById(string id)
+      {
+          await _repository.DeleteCartAsync(id);
+      }
     }
 }
