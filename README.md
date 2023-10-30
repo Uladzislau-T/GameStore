@@ -1,1 +1,1 @@
-It's not ready yet. Development in progress.
+It's not ready yet. Development is in progress.
