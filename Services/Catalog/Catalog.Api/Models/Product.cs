@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace catalog.Models
 {
-    [Table("products")]
+    [Table("product")]
     public class Product : IComparable<Product>
     {
         public int Id { get; set; }
@@ -13,9 +13,9 @@ namespace catalog.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string PreviewImage { get; set; }
-        public string MainImage { get; set; }
-        
+        public string MainImage { get; set; }        
         public DateTimeOffset TimeCreated { get; set; }
+        
         public List<Genre> Genres { get; set; }
         public List<Feature> Features { get; set; }
         public List<Platform> Platforms { get; set; }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMQ\\EventBusRabbitMq.csproj": {}
+    "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMq\\EventBusRabbitMq.csproj": {}
   },
   "projects": {
-    "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMQ\\EventBusRabbitMq.csproj": {
+    "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMq\\EventBusRabbitMq.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMQ\\EventBusRabbitMq.csproj",
+        "projectUniqueName": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMq\\EventBusRabbitMq.csproj",
         "projectName": "EventBusRabbitMq",
-        "projectPath": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMQ\\EventBusRabbitMq.csproj",
+        "projectPath": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMq\\EventBusRabbitMq.csproj",
         "packagesPath": "C:\\Users\\logen\\.nuget\\packages\\",
-        "outputPath": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMQ\\obj\\",
+        "outputPath": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMq\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\logen\\AppData\\Roaming\\NuGet\\NuGet.Config",

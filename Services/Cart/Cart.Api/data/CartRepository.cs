@@ -11,14 +11,14 @@ namespace cart.Data
   {
     private readonly Context _context;
     private readonly ConnectionMultiplexer _redis;
-    private readonly IDatabase _database;
+    private readonly IDatabase _redisDatabase;
     private readonly ILogger<CartRepository> _logger;
 
     public CartRepository(Context context, ConnectionMultiplexer redis, ILogger<CartRepository> logger)
     {
       _context = context;
       _redis = redis;
-      _database = redis.GetDatabase();
+      _redisDatabase = redis.GetDatabase();
       _logger = logger;
     }
 
@@ -41,7 +41,7 @@ namespace cart.Data
 
     public async Task<Cart> GetCartByClientIdAsync(int clientId)
     {       
-      var redisCart = await _database.StringGetAsync($"cart:{clientId}");
+      var redisCart = await _redisDatabase.StringGetAsync($"cart:{clientId}");
 
       Cart response;
       if(!redisCart.IsNullOrEmpty)
@@ -61,7 +61,7 @@ namespace cart.Data
       //   .SetAbsoluteExpiration(DateTime.Now.AddMinutes(5))
       //   .SetSlidingExpiration(TimeSpan.FromMinutes(3));
 
-      var created = await _database.StringSetAsync($"cart:{response.ClientId}", stringToCache, TimeSpan.FromMinutes(2));
+      var created = await _redisDatabase.StringSetAsync($"cart:{response.ClientId}", stringToCache, TimeSpan.FromMinutes(2));
 
       if (!created)
       {
@@ -76,7 +76,7 @@ namespace cart.Data
 
     public async Task<Cart> UpdateCartAsync(Cart cart)
     {
-      var created = await _database.StringSetAsync($"cart:{cart.ClientId}", JsonSerializer.Serialize(cart, CommonJsonDefaults.CaseInsensitiveOptions));
+      var created = await _redisDatabase.StringSetAsync($"cart:{cart.ClientId}", JsonSerializer.Serialize(cart, CommonJsonDefaults.CaseInsensitiveOptions));
       
       if (!created)
       {
@@ -98,9 +98,44 @@ namespace cart.Data
       return cart;
     }
 
+    public async Task UpdatePriceInBasketItems(int productId, decimal newPrice)
+    {
+      var carts = await _context.Cart.Where(c => c.Items.Any(ci => ci.ProductId == productId)).Include(c => c.Items).ToArrayAsync();
+
+      foreach (var cart in carts)
+      {
+        var stringToCache = JsonSerializer.Serialize<Cart>(cart, CommonJsonDefaults.CaseInsensitiveOptions);
+
+        var created = await _redisDatabase.StringSetAsync($"cart:{cart.ClientId}", stringToCache, TimeSpan.FromMinutes(10));
+      
+        if (!created)
+        {
+          throw new DbUpdateException("Problem occured persisting the item in Redis.");
+        }      
+      }
+
+      foreach (var cart in carts)
+      {
+        var totalsum = 0m;
+        foreach (var item in cart.Items)
+        {
+          if (item.ProductId == productId)
+          {
+            item.UnitPrice = newPrice;
+          }
+
+          totalsum += item.UnitPrice;
+        }
+
+        cart.TotalPrice = totalsum;
+      }
+
+      await _context.SaveChangesAsync();        
+    }
+
     public async Task<bool> DeleteCartAsync(string id)
     {
-      return await _database.KeyDeleteAsync(id);
+      return await _redisDatabase.KeyDeleteAsync(id);
     }    
   }
 }

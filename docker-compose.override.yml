@@ -3,7 +3,6 @@ version: '3.8'
 services:
 
   sql-data:
-    image: postgres:latest  
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
@@ -14,11 +13,16 @@ services:
       - gamestore-sqldata:/var/lib/postgresql/data
 
   redis-data:
-    image: redis:alpine
     ports:
       - "6379:6379"
     # volumes:
     #   - gamestore-redisdata:/data 
+
+  rabbitmq:
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
   # identity-api:
   #   environment:
@@ -36,31 +40,27 @@ services:
   catalog-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      # - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
-      # - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:81
-      # - Kestrel__Endpoints__GRPC__Protocols=Http2
+      - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
+      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:81
+      - Kestrel__Endpoints__GRPC__Protocols=Http2
       # - PicBaseUrl=${GAMESTORE_STORAGE_CATALOG_URL}
-      # - PATH_BASE=/catalog-api
+      - PATH_BASE=/catalog-api
     ports:
       - "8002:80"
-      - "9002:81"
-    depends_on:
-      - sql-data
-      - redis-data
+      - "9002:81"    
 
-  # cart-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     # - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
-  #     # - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:81
-  #     # - Kestrel__Endpoints__GRPC__Protocols=Http2
-  #     # - Identity__Url=http://identity-api
-  #     # - Identity__ExternalUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8001
-  #   depends_on:   # не запустит приложение до старта базы данных
-  #     - redis-data
-  #   ports:
-  #     - "8003:80" # внешний и внутренний порт   
-  #     - "9003:81"   
+  cart-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
+      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:81
+      - Kestrel__Endpoints__GRPC__Protocols=Http2
+      # - Identity__Url=http://identity-api
+      # - Identity__ExternalUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:8001
+      - PATH_BASE=/cart-api
+    ports:
+      - "8003:80" # внешний и внутренний порт
+      - "9003:81"
 
   # webagg:
   #   environment:

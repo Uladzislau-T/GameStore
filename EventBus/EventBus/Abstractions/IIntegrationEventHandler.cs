@@ -1,4 +1,4 @@
-namespace EventBus.Abstractions
+namespace Ecommerce.EventBus.Abstractions
 {
   public interface IIntegrationEventHandler<T> where T : IntegrationEvent
   {

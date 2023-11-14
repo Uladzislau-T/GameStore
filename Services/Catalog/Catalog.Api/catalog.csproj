@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Services.Common\Services.Common.csproj" />
+    <ProjectReference Include="..\..\Catalog\Catalog.DbUpdater\Catalog.DbUpdater.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,7 @@
-using static EventBus.EventBusSubscriptionsManager;
+using Ecommerce.EventBus.Abstractions;
+using static Ecommerce.EventBus.EventBusSubscriptionsManager;
 
-namespace EventBus.Abstractions
+namespace Ecommerce.EventBus
 {
   public interface IEventBusSubscriptionsManager
   {

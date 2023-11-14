@@ -1,6 +1,15 @@
 ﻿version: '3.8' # зависит от версии docker engine
 
 services: 
+
+  sql-data:
+    image: postgres:latest  
+
+  redis-data:
+    image: redis:alpine
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
   
   # identity-api:
   #   image: ${REGISTRY:-gamestore}/identity.api:${PLATFORM:-linux}-${TAG:-latest}
@@ -13,12 +22,20 @@ services:
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.Api/Dockerfile 
+    depends_on:
+      - sql-data
+      - redis-data
+      - rabbitmq
 
   cart-api:
     image: ${REGISTRY:-gamestore}/cart.api:${PLATFORM:-linux}-${TAG:-latest}
     build:
-      context: ./Services/Cart/Cart.Api
-      dockerfile: Dockerfile    
+      context: .
+      dockerfile: Services/Cart/Cart.Api/Dockerfile  
+    depends_on:     # не запустит приложение до старта базы данных
+      - sql-data
+      - redis-data
+      - rabbitmq   
     
   # webagg:
   #   image: ${REGISTRY:-gamestore}/webagg:${PLATFORM:-linux}-${TAG:-latest}

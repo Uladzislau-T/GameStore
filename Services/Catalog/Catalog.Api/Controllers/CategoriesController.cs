@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace catalog.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/catalog/[controller]")]
 public class CategoryController : ControllerBase
 {
   private readonly ICategoryRepository _categoryRepository;

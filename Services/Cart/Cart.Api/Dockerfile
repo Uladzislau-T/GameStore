@@ -1,14 +1,21 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app   
 
-COPY cart.csproj ./
-RUN dotnet restore
+    
+COPY ./Services/Cart/Cart.Api/*.csproj ./Services/Cart/Cart.Api/
+COPY ./Services/Services.Common/*.csproj ./Services/Services.Common/
 
-COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet restore ./Services/Cart/Cart.Api/cart.csproj
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
-WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT [ "dotnet", "cart.dll"]
+COPY . .
+WORKDIR "/app/Services/Cart/Cart.Api"
+RUN dotnet build "cart.csproj" -c Release 
 
+FROM build as publish
+RUN dotnet publish "cart.csproj" -c Release -o /app/publish
+ 
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app 
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "cart.dll"]

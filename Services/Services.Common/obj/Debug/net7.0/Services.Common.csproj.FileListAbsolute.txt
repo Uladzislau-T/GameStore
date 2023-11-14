@@ -10,3 +10,20 @@ C:\Documents\Programming\NodeJs\Project\Services\Services.Common\obj\Debug\net7.
 C:\Documents\Programming\NodeJs\Project\Services\Services.Common\obj\Debug\net7.0\refint\Services.Common.dll
 C:\Documents\Programming\NodeJs\Project\Services\Services.Common\obj\Debug\net7.0\Services.Common.pdb
 C:\Documents\Programming\NodeJs\Project\Services\Services.Common\obj\Debug\net7.0\ref\Services.Common.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\bin\Debug\net7.0\Services.Common.deps.json
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\bin\Debug\net7.0\Services.Common.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\bin\Debug\net7.0\Services.Common.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\bin\Debug\net7.0\EventBus.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\bin\Debug\net7.0\EventBusRabbitMq.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\bin\Debug\net7.0\EventBusRabbitMq.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\bin\Debug\net7.0\EventBus.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.csproj.AssemblyReference.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.AssemblyInfoInputs.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.AssemblyInfo.cs
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.csproj.CoreCompileInputs.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.csproj.CopyComplete
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\refint\Services.Common.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\Services.Common.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Services.Common\obj\Debug\net7.0\ref\Services.Common.dll

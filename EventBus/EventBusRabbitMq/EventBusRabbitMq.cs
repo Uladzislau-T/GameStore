@@ -1,16 +1,20 @@
 ﻿#nullable disable
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
-using EventBus;
-using EventBus.Abstractions;
-using EventBus.Extensions;
-using EventBusRabbitMq.Abstractions;
+using Ecommerce.EventBus;
+using Ecommerce.EventBus.Abstractions;
+using Ecommerce.EventBus.Extensions;
+using Ecommerce.EventBusRabbitMq.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RabbitMQ.Client.Exceptions;
 
-namespace EventBusRabbitMq;
+namespace Ecommerce.EventBusRabbitMq;
 
 public class EventBusRabbitMq : IEventBus, IDisposable
 {
@@ -22,21 +26,59 @@ public class EventBusRabbitMq : IEventBus, IDisposable
   private readonly IServiceProvider _serviceProvider;
   private IModel _consumerChannel;
   private string _queueName;
+  private int _retryCount;
 
   public EventBusRabbitMq(ILogger<EventBusRabbitMq> logger, IEventBusSubscriptionsManager subsManager, IRabbitMQPersistentConnection persistentConnection,
-    IServiceProvider serviceProvider, string queueName)
+    IServiceProvider serviceProvider, string queueName, int retryCount = 5)
   {
     _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     _subsManager = subsManager ?? new EventBusSubscriptionsManager();
     _persistentConnection = persistentConnection ?? throw new ArgumentNullException(nameof(persistentConnection));
-    _consumerChannel = CreateConsumerChannel();
-    _serviceProvider = serviceProvider;
     _queueName = queueName;
+    _retryCount = retryCount;
+    _consumerChannel = CreateConsumerChannel();
+    _serviceProvider = serviceProvider;    
   }
 
   public void Publish(IntegrationEvent @event)
   {
-    throw new NotImplementedException();
+    if (!_persistentConnection.IsConnected)
+    {
+      _persistentConnection.TryConnect();
+    }
+
+    var policy = RetryPolicy.Handle<BrokerUnreachableException>()
+      .Or<SocketException>()
+      .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+      {
+        _logger.LogWarning(ex, $"Could not publish event: {@event.Id} after {time.TotalSeconds:n1}s");
+      });
+
+    var eventName = @event.GetType().Name;
+
+    _logger.LogInformation($"Creating RabbitMQ channel to publish event: {@event.Id} ({eventName})");
+    using var channel = _persistentConnection.CreateModel();
+    _logger.LogInformation($"Declaring RabbitMQ exchange to publish event: {@event.Id}");
+
+    channel.ExchangeDeclare(exchange: BROKER_NAME, type: "direct");
+
+    var indentedOption = new JsonSerializerOptions() {WriteIndented = true};
+    var body = JsonSerializer.SerializeToUtf8Bytes(@event, @event.GetType(), indentedOption);
+
+    policy.Execute(() => 
+    {
+      var properties = channel.CreateBasicProperties();
+      properties.DeliveryMode = 2;
+
+      _logger.LogInformation($"Publishing event to RabbitMQ: {@event.Id}");
+
+      channel.BasicPublish(
+        exchange: BROKER_NAME,
+        routingKey: eventName,
+        mandatory: true, //message will be returned to publisher for error handling  
+        basicProperties: properties,
+        body: body);
+    });
   }
 
   public void Subscribe<T, TH>()

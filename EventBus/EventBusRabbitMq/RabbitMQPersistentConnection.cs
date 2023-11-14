@@ -1,6 +1,6 @@
 #nullable disable
 using System.Net.Sockets;
-using EventBusRabbitMq.Abstractions;
+using Ecommerce.EventBusRabbitMq.Abstractions;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
@@ -8,7 +8,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace EventBusRabbitMq;
+namespace Ecommerce.EventBusRabbitMq;
 
 public class RabbitMQPersistentConnection : IRabbitMQPersistentConnection
 {

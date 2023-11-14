@@ -1,11 +1,12 @@
 #nullable disable
-using EventBus.Abstractions;
 
-namespace EventBus
+using Ecommerce.EventBus.Abstractions;
+
+namespace Ecommerce.EventBus
 {
   public partial class EventBusSubscriptionsManager : IEventBusSubscriptionsManager
   {
-    private readonly Dictionary<string, List<SubscriptionInfo>> _handlers;
+    private readonly Dictionary<string, List<SubscriptionInfo>> _handlers = new();
     private readonly List<Type> _eventTypes = new List<Type>();
 
 

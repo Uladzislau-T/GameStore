@@ -1,4 +1,4 @@
-﻿namespace EventBus;
+﻿namespace Ecommerce.EventBus;
 
 public class IntegrationEvent
 {

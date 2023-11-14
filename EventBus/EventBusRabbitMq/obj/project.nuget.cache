@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eTLMia9DF7gicd2xMl4ugMTjdB4B+6VKGi4lfKmU1dDzNtnQs68zllhvwF6S5eJKLtcEgejuFztKNAC7RoCMWQ==",
+  "dgSpecHash": "U80sKSvkU4NEyyPAmbB0hd7lX1JcE0NtJlOXKKWEGzrA1upiTJJFJuY6DzeIUrBlbc766IC2a/LiYUbQYn/8Fw==",
   "success": true,
-  "projectFilePath": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMQ\\EventBusRabbitMq.csproj",
+  "projectFilePath": "C:\\Documents\\Programming\\C++++\\My Projects\\E-commerceMicroservices\\EventBus\\EventBusRabbitMq\\EventBusRabbitMq.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\logen\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\logen\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",

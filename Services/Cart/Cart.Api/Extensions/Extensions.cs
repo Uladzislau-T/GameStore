@@ -8,7 +8,7 @@ namespace cart.Extentions
     {
         return services.AddSingleton(sp =>
         {
-            var redisConfig = ConfigurationOptions.Parse(configuration.GetConnectionString("redisCache"), true);
+            var redisConfig = ConfigurationOptions.Parse(configuration.GetConnectionString("redis"), true);
 
             return ConnectionMultiplexer.Connect(redisConfig);
         });

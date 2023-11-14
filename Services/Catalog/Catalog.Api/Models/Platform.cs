@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace catalog.Models
 {
-    [Table("platforms")]
+    [Table("platform")]
     public class Platform
     {
         public int Id { get; set; }

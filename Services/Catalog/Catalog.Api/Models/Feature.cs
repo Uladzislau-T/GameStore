@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace catalog.Models
 {
-    [Table("features")]
+    [Table("feature")]
     public class Feature
     {
         public int Id { get; set; }

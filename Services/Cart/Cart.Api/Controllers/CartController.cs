@@ -15,18 +15,20 @@ namespace cart.Controllers
         _repository = repository;
       }
 
-      // [HttpGet]
-      // public async Task<ActionResult<Cart>> Get()
-      // {
-      //   var cart = await _context.Cart.Include(c => c.Items).SingleOrDefaultAsync(c => c.Id == 1);
-      //   return Ok(cart);
-      // }
+      [HttpGet]
+      public async Task<ActionResult<Cart>> Get()
+      {
+        var cart = await _repository.GetAllCartAsync();
+        return Ok(cart);
+      }
 
       [HttpDelete("{id}")]
       [ProducesResponseType(StatusCodes.Status200OK)]
-      public async Task DeleteCartById(string id)
+      public async Task<ActionResult> DeleteCartById(string id)
       {
           await _repository.DeleteCartAsync(id);
+
+          return Ok();
       }
     }
 }

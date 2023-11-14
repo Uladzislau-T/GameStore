@@ -24,17 +24,17 @@ class CatalogBrandEntityTypeConfiguration: IEntityTypeConfiguration<Product>
         builder
         .HasMany(c => c.Genres)
         .WithMany(s => s.Products)
-        .UsingEntity(j => j.ToTable("product_genres"));
+        .UsingEntity(j => j.ToTable("product_genre"));
 
         builder
         .HasMany(c => c.Features)
         .WithMany(s => s.Products)
-        .UsingEntity(j => j.ToTable("product_features"));
+        .UsingEntity(j => j.ToTable("product_feature"));
 
         builder
         .HasMany(c => c.Platforms)
         .WithMany(s => s.Products)
-        .UsingEntity(j => j.ToTable("product_platforms"));
+        .UsingEntity(j => j.ToTable("product_platform"));
 
 
     }

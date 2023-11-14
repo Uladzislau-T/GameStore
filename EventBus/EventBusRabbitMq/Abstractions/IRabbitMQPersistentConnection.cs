@@ -1,6 +1,6 @@
 using RabbitMQ.Client;
 
-namespace EventBusRabbitMq.Abstractions
+namespace Ecommerce.EventBusRabbitMq.Abstractions
 {
   public interface IRabbitMQPersistentConnection : IDisposable
   {

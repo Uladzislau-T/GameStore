@@ -1,0 +1,12 @@
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\Catalog.DbUpdater.GeneratedMSBuildEditorConfig.editorconfig
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\Catalog.DbUpdater.AssemblyInfoInputs.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\Catalog.DbUpdater.AssemblyInfo.cs
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\Catalog.DbUpdater.csproj.CoreCompileInputs.cache
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\bin\Debug\net7.0\Catalog.DbUpdater.deps.json
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\bin\Debug\net7.0\Catalog.DbUpdater.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\bin\Debug\net7.0\Catalog.DbUpdater.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\Catalog.DbUpdater.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\refint\Catalog.DbUpdater.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\Catalog.DbUpdater.pdb
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\ref\Catalog.DbUpdater.dll
+C:\Documents\Programming\C++++\My Projects\E-commerceMicroservices\Services\Catalog\Catalog.DbUpdater\obj\Debug\net7.0\Catalog.DbUpdater.csproj.AssemblyReference.cache

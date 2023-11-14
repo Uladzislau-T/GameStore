@@ -1,6 +1,4 @@
-using EventBus.Abstractions;
-
-namespace EventBus
+namespace Ecommerce.EventBus
 {
   public partial class EventBusSubscriptionsManager : IEventBusSubscriptionsManager
   {

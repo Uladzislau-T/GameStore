@@ -8,7 +8,7 @@ using catalog.Models;
 namespace catalog.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/catalog/[controller]")]
 public class ProductController : ControllerBase
 {
 
@@ -56,7 +56,8 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut]
-    [ProducesResponseType((int)HttpStatusCode.Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<Product>> UpdateProduct([FromBody] Product product)
     {     
         var result = await _productRepository.UpdateProduct(product);
@@ -66,7 +67,7 @@ public class ProductController : ControllerBase
             return NotFound();
         }   
 
-        return product;
+        return result;
     }
 
     [Route("{id}")]

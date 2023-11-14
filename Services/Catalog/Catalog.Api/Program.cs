@@ -2,7 +2,9 @@ using System.Text.Json.Serialization;
 using cart.Connections.Grpc;
 using catalog.Data;
 using catalog.Extentions;
+using catalog.IntegrationEvents;
 using catalog.Models.Interfaces;
+using Catalog.DbUpdater;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 var isDev = builder.Environment.IsDevelopment();
 
-Console.WriteLine("--> Using Docke Db");
+builder.AddServiceDefaults();
+
+var conStr = builder.Configuration.GetConnectionString("catalogConn");
+DbUpdater.CreateAndOrUpdateDbIfRequired(conStr);
+
+// Console.WriteLine("--> Using Docker Db");
 builder.Services.AddDbContext<Context>(opt =>
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("catalogConn")));
+    opt.UseNpgsql(conStr));
 
 
 builder.Services.AddRedis(builder.Configuration);
@@ -29,6 +36,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //Model services
 
+builder.Services.AddTransient<ICatalogIntegrationEventService, CatalogIntegrationEventService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
@@ -47,6 +55,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+if (isDev)
+{
+    app.UseMiniProfiler();
+}
+
 // app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -56,6 +69,6 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapGrpcService<CatalogService>();
 
-PrepDb.PrepPopulation(app, false);
+PrepDb.PrepPopulation(app, isDev);
 
 app.Run();
